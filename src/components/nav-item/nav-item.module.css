@@ -1,0 +1,15 @@
+.link {
+  text-decoration: none;
+  color: #8585AD;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.linkActive {
+  color: #F2F2F3;
+}
+
+.text {
+
+}
