@@ -1,4 +1,3 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Logo,
@@ -11,7 +10,7 @@ import headerStyles from "./app-header.module.css";
 
 function AppHeader() {
   return (
-    <header className={`${headerStyles.header} pt-4 pb-4`}>
+    <header className={`${headerStyles.header} pt-3 pb-3`}>
       <nav className={headerStyles.nav}>
         <ul className={headerStyles.navList}>
           <li className={headerStyles.navItem}>

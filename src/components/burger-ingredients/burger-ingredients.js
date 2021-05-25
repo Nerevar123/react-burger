@@ -7,9 +7,9 @@ import ingredientsStyles from "./burger-ingredients.module.css";
 function BurgerIngredients({ data }) {
   const [current, setCurrent] = useState("one");
 
-  const buns = data.filter(item => item.type === "bun");
-  const sauces = data.filter(item => item.type === "sauce");
-  const main = data.filter(item => item.type === "main");
+  const buns = data.filter((item) => item.type === "bun");
+  const sauces = data.filter((item) => item.type === "sauce");
+  const main = data.filter((item) => item.type === "main");
 
   return (
     <section className={ingredientsStyles.section}>
@@ -31,9 +31,11 @@ function BurgerIngredients({ data }) {
           </Tab>
         </li>
       </ul>
-    <IngredientsList items={buns} title="Булки" />
-    <IngredientsList items={sauces} title="Соусы" />
-    <IngredientsList items={main} title="Начинки" />
+      <div className={ingredientsStyles.cards}>
+        <IngredientsList items={buns} title="Булки" />
+        <IngredientsList items={sauces} title="Соусы" />
+        <IngredientsList items={main} title="Начинки" />
+      </div>
     </section>
   );
 }

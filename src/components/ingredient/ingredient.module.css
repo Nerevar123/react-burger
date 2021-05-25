@@ -12,10 +12,6 @@
   align-items: center;
 }
 
-.price {
-
-}
-
 .name {
   text-overflow: ellipsis;
   white-space: nowrap;

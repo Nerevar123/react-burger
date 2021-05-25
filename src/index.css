@@ -16,4 +16,22 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-  /* font-family: 'Inter', Helvetica, Arial, sans-serif; */
+.constructor-element__text {
+  flex-grow: 1;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 12px;
+}
+
+::-webkit-scrollbar-track:vertical {
+  background: #2F2F37;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  background: #8585AD;
+  border-radius: 12px;
+  box-sizing: border-box;
+  border: 3px solid #2F2F37;
+}

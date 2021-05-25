@@ -9,7 +9,6 @@ function NavItem({ text, icon, to }) {
       to={to}
       className={`${navItemStyles.link} p-5`}
       activeClassName={navItemStyles.linkActive}
-      // onClick={() => setIsButtonClicked(false)}
     >
       {icon}
       <span className="text text_type_main-default ml-2">{text}</span>
