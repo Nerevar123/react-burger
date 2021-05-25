@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import {
   Logo,
   BurgerIcon,
@@ -42,9 +41,5 @@ function AppHeader() {
     </header>
   );
 }
-
-AppHeader.propTypes = {
-  isActive: PropTypes.bool,
-};
 
 export default AppHeader;

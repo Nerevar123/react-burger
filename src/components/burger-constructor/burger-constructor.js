@@ -36,7 +36,15 @@ function BurgerConstructor({ data }) {
 }
 
 BurgerConstructor.propTypes = {
-  isActive: PropTypes.bool,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 export default BurgerConstructor;

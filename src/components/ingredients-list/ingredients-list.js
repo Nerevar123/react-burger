@@ -8,7 +8,7 @@ function IngredientsList({ items, title }) {
       <h2 className="text text_type_main-medium">{title}</h2>
       <ul className={ingredientListStyles.list}>
         {items.map((item) => (
-          <li className={ingredientListStyles.item}>
+          <li className={ingredientListStyles.item} key={item._id}>
             <Ingredient item={item} />
           </li>
         ))}
@@ -18,7 +18,16 @@ function IngredientsList({ items, title }) {
 }
 
 IngredientsList.propTypes = {
-  isActive: PropTypes.bool,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+    })
+  ),
+  title: PropTypes.string.isRequired,
 };
 
 export default IngredientsList;

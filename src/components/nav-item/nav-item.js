@@ -17,7 +17,9 @@ function NavItem({ text, icon, to }) {
 }
 
 NavItem.propTypes = {
-  isActive: PropTypes.bool,
+  text: PropTypes.string.isRequired,
+  icon: PropTypes.element.isRequired,
+  to: PropTypes.string.isRequired,
 };
 
 export default NavItem;
