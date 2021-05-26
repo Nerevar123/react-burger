@@ -1,0 +1,13 @@
+.tabList {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0;
+}
+
+.cards {
+  overflow-y: scroll;
+  max-height: calc(100vh - 336px);
+}

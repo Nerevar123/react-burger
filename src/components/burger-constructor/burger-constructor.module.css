@@ -1,0 +1,25 @@
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  overflow-y: scroll;
+  max-height: calc(100vh - 536px);
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.priceContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

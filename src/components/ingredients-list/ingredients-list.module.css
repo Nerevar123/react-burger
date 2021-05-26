@@ -1,0 +1,17 @@
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  gap: 24px;
+  justify-content: center;
+  justify-items: center;
+  list-style-type: none;
+  padding-left: 0;
+  composes: mr-4 from global;
+  composes: ml-4 from global;
+  composes: mt-6 from global;
+  composes: mb-10 from global;
+}
+
+.item {
+  max-width: 272px;
+}
