@@ -1,29 +1,32 @@
-import React from "react";
+import { useEffect, cloneElement } from "react";
 
 function ClosableModal({ children, ...rest }) {
-  React.useEffect(() => {
-    function closePopupWithEsc(e) {
+  useEffect(() => {
+    function closeModalWithEsc(e) {
       if (e.key === "Escape") {
         children.props.onClose();
       }
     }
 
-    function closePopupWithClick(e) {
-      if (e.target.classList.contains("modal")) {
+    function closeModalWithClick(e) {
+      if (
+        children.props.wrapperRef.current &&
+        !children.props.wrapperRef.current.contains(e.target)
+      ) {
         children.props.onClose();
       }
     }
 
-    document.addEventListener("mousedown", closePopupWithClick);
-    document.addEventListener("keydown", closePopupWithEsc);
+    document.addEventListener("mousedown", closeModalWithClick);
+    document.addEventListener("keydown", closeModalWithEsc);
 
     return () => {
-      document.removeEventListener("mousedown", closePopupWithClick);
-      document.removeEventListener("keydown", closePopupWithEsc);
+      document.removeEventListener("mousedown", closeModalWithClick);
+      document.removeEventListener("keydown", closeModalWithEsc);
     };
   }, [children]);
 
-  return <>{React.cloneElement(children, { ...rest })}</>;
+  return <>{cloneElement(children, { ...rest })}</>;
 }
 
 export default ClosableModal;

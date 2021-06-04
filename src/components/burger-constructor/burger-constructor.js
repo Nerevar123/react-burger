@@ -6,7 +6,7 @@ import {
 import ConstructorItem from "../constructor-item/constructor-item";
 import constructorStyles from "./burger-constructor.module.css";
 
-function BurgerConstructor({ data, openModal }) {
+function BurgerConstructor({ data, onConfirmClick }) {
   const firstElement = data[0];
   const lastElement = data[data.length - 1];
   const elements = data.slice(1, data.length - 1);
@@ -27,7 +27,7 @@ function BurgerConstructor({ data, openModal }) {
           <span className="text text_type_digits-medium mr-2">610</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="large" onClick={openModal}>
+        <Button type="primary" size="large" onClick={onConfirmClick}>
           Оформить заказ
         </Button>
       </div>
@@ -43,8 +43,14 @@ BurgerConstructor.propTypes = {
       type: PropTypes.string.isRequired,
       price: PropTypes.number.isRequired,
       image: PropTypes.string.isRequired,
+      image_large: PropTypes.string.isRequired,
+      calories: PropTypes.number.isRequired,
+      proteins: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+      carbohydrates: PropTypes.number.isRequired,
     })
   ),
+  onConfirmClick: PropTypes.func,
 };
 
 export default BurgerConstructor;

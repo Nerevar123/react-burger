@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Router, Route, Switch, useHistory } from "react-router-dom";
 
 import AppHeader from "../app-header/app-header";
@@ -7,21 +7,19 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import Modal from "../modal/modal";
 import Preloader from "../preloader/preloader";
 import ClosableModal from "../hocs/closable-modal";
-
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import OrderDetails from "../order-details/order-details";
 import { getData } from "../../utils/api";
-import useDisclosure from "../../hooks/useDisclosure";
 import appStyles from "./app.module.css";
 
 function App() {
   const [data, setData] = useState(null);
+  const [isOrderModalOpen, setOrderModalOpen] = useState(false);
+  const [isIngredientModalOpen, setIngredientModalOpen] = useState(false);
+  const [currentIngredient, setCurrentIngredient] = useState(null);
   const history = useHistory();
-  // const open = useCallback(() => setData((prev) => prev + 1), []);
-  // const close = useCallback(() => console.log(data), [data]);
-
-  const [isModalOpen, modalToggler] = useDisclosure(false, {
-    // onOpen: open,
-    // onClose: close,
-  });
+  const orderRef = useRef(null);
+  const ingredientRef = useRef(null);
 
   useEffect(() => {
     getData()
@@ -31,8 +29,22 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
+  const onIngredientClick = (item) => {
+    setCurrentIngredient(item);
+    setIngredientModalOpen(true);
+  };
+
+  const handleConfirmClick = () => {
+    setOrderModalOpen(true);
+  };
+
+  const closeAllModal = () => {
+    setIngredientModalOpen(false);
+    setOrderModalOpen(false);
+  };
+
   if (data === null) {
-    return <Preloader pageLoader />;
+    return <Preloader />;
   }
 
   return (
@@ -42,15 +54,40 @@ function App() {
         <main className={appStyles.main}>
           <Switch>
             <Route exact path="/">
-              <BurgerIngredients data={data} />
-              <BurgerConstructor data={data} openModal={modalToggler} />
+              <BurgerIngredients
+                data={data}
+                onIngredientClick={onIngredientClick}
+              />
+              <BurgerConstructor
+                data={data}
+                onConfirmClick={handleConfirmClick}
+              />
             </Route>
           </Switch>
         </main>
       </Router>
-      <ClosableModal>
-        <Modal data={data} isOpen={isModalOpen} onClose={modalToggler} />
-      </ClosableModal>
+      {isIngredientModalOpen && (
+        <ClosableModal>
+          <Modal
+            isOpen={isIngredientModalOpen}
+            onClose={closeAllModal}
+            wrapperRef={ingredientRef}
+          >
+            <IngredientDetails item={currentIngredient} />
+          </Modal>
+        </ClosableModal>
+      )}
+      {isOrderModalOpen && (
+        <ClosableModal>
+          <Modal
+            isOpen={isOrderModalOpen}
+            onClose={closeAllModal}
+            wrapperRef={orderRef}
+          >
+            <OrderDetails isOpen={isOrderModalOpen} />
+          </Modal>
+        </ClosableModal>
+      )}
     </>
   );
 }
