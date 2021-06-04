@@ -1,0 +1,28 @@
+.modalContainer {
+  margin: auto;
+  max-width: 720px;
+  width: 100%;
+  background-color: #1c1c21;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: 1px solid rgba(76, 76, 255, 0.2);
+  box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04),
+    0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04),
+    0px 0px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 40px;
+  position: relative;
+}
+
+.closeButton {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 60px;
+  right: 40px;
+}

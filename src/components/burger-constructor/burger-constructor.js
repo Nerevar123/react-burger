@@ -6,7 +6,7 @@ import {
 import ConstructorItem from "../constructor-item/constructor-item";
 import constructorStyles from "./burger-constructor.module.css";
 
-function BurgerConstructor({ data }) {
+function BurgerConstructor({ data, openModal }) {
   const firstElement = data[0];
   const lastElement = data[data.length - 1];
   const elements = data.slice(1, data.length - 1);
@@ -27,7 +27,7 @@ function BurgerConstructor({ data }) {
           <span className="text text_type_digits-medium mr-2">610</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={openModal}>
           Оформить заказ
         </Button>
       </div>

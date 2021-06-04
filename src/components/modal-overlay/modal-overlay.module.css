@@ -1,0 +1,43 @@
+.modal {
+  transition: .3s ease-in-out;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.modalOpened {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup-enter {
+  visibility: hidden;
+  opacity: 0;
+}
+.popup-enter-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup-exit {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup-exit-active {
+  visibility: hidden;
+  opacity: 0;
+}
+
+@media screen and (max-width: 650px){
+  .popup {
+    transition: none;
+  }
+}
