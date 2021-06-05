@@ -1,5 +1,9 @@
 .header {
   color: #f2f2f3;
+  background-color: #1c1c21;
+}
+
+.nav {
   max-width: 1280px;
   margin: 0 auto;
 }

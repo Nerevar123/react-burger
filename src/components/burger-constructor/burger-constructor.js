@@ -7,12 +7,11 @@ import ConstructorItem from "../constructor-item/constructor-item";
 import constructorStyles from "./burger-constructor.module.css";
 
 function BurgerConstructor({ data, onConfirmClick }) {
-  const firstElement = data[0];
-  const lastElement = data[data.length - 1];
+  const bun = data[0];
   const elements = data.slice(1, data.length - 1);
   return (
     <section className={`${constructorStyles.section} mt-25 pl-4`}>
-      <ConstructorItem item={firstElement} type="top" isLocked />
+      <ConstructorItem item={bun} type="top" isLocked />
       <ul className={constructorStyles.list}>
         {elements.map((item) => (
           <li key={item._id} className={`${constructorStyles.listItem}`}>
@@ -20,7 +19,7 @@ function BurgerConstructor({ data, onConfirmClick }) {
           </li>
         ))}
       </ul>
-      <ConstructorItem item={lastElement} type="bottom" isLocked />
+      <ConstructorItem item={bun} type="bottom" isLocked />
 
       <div className={`${constructorStyles.buttonContainer} mt-9 pr-4`}>
         <div className={`${constructorStyles.priceContainer} mr-10`}>
@@ -38,16 +37,7 @@ function BurgerConstructor({ data, onConfirmClick }) {
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
       type: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      calories: PropTypes.number.isRequired,
-      proteins: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
     })
   ),
   onConfirmClick: PropTypes.func,

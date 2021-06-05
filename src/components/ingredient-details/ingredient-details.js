@@ -13,35 +13,27 @@ function IngredientDetails({ item }) {
       <p className="text text_type_main-medium mt-4 mb-8">{item.name}</p>
       <ul className={`${ingredientDetailsStyles.list} mb-5`}>
         <li className={ingredientDetailsStyles.listItem}>
-          <span className={`text text_type_main-default text_color_inactive`}>
-            Калории,ккал
-          </span>
-          <span className={`text text_type_digits-default text_color_inactive`}>
-            {item.calories / 10}
+          <span className={ingredientDetailsStyles.itemText}>Калории,ккал</span>
+          <span className={ingredientDetailsStyles.itemNumbers}>
+            {item.calories}
           </span>
         </li>
         <li className={ingredientDetailsStyles.listItem}>
-          <span className={`text text_type_main-default text_color_inactive`}>
-            Белки, г
-          </span>
-          <span className={`text text_type_digits-default text_color_inactive`}>
-            {item.proteins / 10}
+          <span className={ingredientDetailsStyles.itemText}>Белки, г</span>
+          <span className={ingredientDetailsStyles.itemNumbers}>
+            {item.proteins}
           </span>
         </li>
         <li className={ingredientDetailsStyles.listItem}>
-          <span className={`text text_type_main-default text_color_inactive`}>
-            Жиры, г
-          </span>
-          <span className={`text text_type_digits-default text_color_inactive`}>
-            {item.fat / 10}
+          <span className={ingredientDetailsStyles.itemText}>Жиры, г</span>
+          <span className={ingredientDetailsStyles.itemNumbers}>
+            {item.fat}
           </span>
         </li>
         <li className={ingredientDetailsStyles.listItem}>
-          <span className={`text text_type_main-default text_color_inactive`}>
-            Углеводы, г
-          </span>
-          <span className={`text text_type_digits-default text_color_inactive`}>
-            {item.carbohydrates / 10}
+          <span className={ingredientDetailsStyles.itemText}>Углеводы, г</span>
+          <span className={ingredientDetailsStyles.itemNumbers}>
+            {item.carbohydrates}
           </span>
         </li>
       </ul>

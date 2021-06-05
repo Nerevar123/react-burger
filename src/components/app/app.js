@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Router, Route, Switch, useHistory } from "react-router-dom";
 
 import AppHeader from "../app-header/app-header";
@@ -6,7 +6,6 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import Modal from "../modal/modal";
 import Preloader from "../preloader/preloader";
-import ClosableModal from "../hocs/closable-modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../order-details/order-details";
 import { getData } from "../../utils/api";
@@ -17,16 +16,19 @@ function App() {
   const [isOrderModalOpen, setOrderModalOpen] = useState(false);
   const [isIngredientModalOpen, setIngredientModalOpen] = useState(false);
   const [currentIngredient, setCurrentIngredient] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
-  const orderRef = useRef(null);
-  const ingredientRef = useRef(null);
+  const orderNumber = "034536";
 
   useEffect(() => {
     getData()
       .then(({ data }) => {
         setData(data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   const onIngredientClick = (item) => {
@@ -43,7 +45,7 @@ function App() {
     setOrderModalOpen(false);
   };
 
-  if (data === null) {
+  if (isLoading === true) {
     return <Preloader />;
   }
 
@@ -67,26 +69,14 @@ function App() {
         </main>
       </Router>
       {isIngredientModalOpen && (
-        <ClosableModal>
-          <Modal
-            isOpen={isIngredientModalOpen}
-            onClose={closeAllModal}
-            wrapperRef={ingredientRef}
-          >
-            <IngredientDetails item={currentIngredient} />
-          </Modal>
-        </ClosableModal>
+        <Modal isOpen={isIngredientModalOpen} onClose={closeAllModal}>
+          <IngredientDetails item={currentIngredient} />
+        </Modal>
       )}
       {isOrderModalOpen && (
-        <ClosableModal>
-          <Modal
-            isOpen={isOrderModalOpen}
-            onClose={closeAllModal}
-            wrapperRef={orderRef}
-          >
-            <OrderDetails isOpen={isOrderModalOpen} />
-          </Modal>
-        </ClosableModal>
+        <Modal isOpen={isOrderModalOpen} onClose={closeAllModal}>
+          <OrderDetails isOpen={isOrderModalOpen} orderNumber={orderNumber} />
+        </Modal>
       )}
     </>
   );

@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 import DoneAnimation from "../done-animation/done-animation";
 import orderDetailsStyles from "./order-details.module.css";
 
-function OrderDetails({ isOpen }) {
+function OrderDetails({ isOpen, orderNumber }) {
   return (
     <>
-      <h2 className="text text_type_digits-large mt-20 mb-8">034536</h2>
+      <h2 className="text text_type_digits-large mt-20 mb-8">{orderNumber}</h2>
       <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
       <div className={orderDetailsStyles.gif}>
         {isOpen && <DoneAnimation />}
