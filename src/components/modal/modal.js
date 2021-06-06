@@ -11,29 +11,21 @@ function Modal({ isOpen, onClose, children }) {
   const wrapperRef = useRef(null);
 
   useEffect(() => {
-    function closeModalWithEsc(e) {
+    function closeModalByEsc(e) {
       if (e.key === "Escape") {
         onClose();
       }
     }
 
-    function closeModalWithClick(e) {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
-        onClose();
-      }
-    }
-
-    document.addEventListener("mousedown", closeModalWithClick);
-    document.addEventListener("keydown", closeModalWithEsc);
+    document.addEventListener("keydown", closeModalByEsc);
 
     return () => {
-      document.removeEventListener("mousedown", closeModalWithClick);
-      document.removeEventListener("keydown", closeModalWithEsc);
+      document.removeEventListener("keydown", closeModalByEsc);
     };
   }, [onClose]);
 
   return ReactDOM.createPortal(
-    <ModalOverlay isOpen={isOpen}>
+    <ModalOverlay isOpen={isOpen} onClose={onClose}>
       <div className={`${modalStyles.modalContainer} p-10`} ref={wrapperRef}>
         {children}
         <button

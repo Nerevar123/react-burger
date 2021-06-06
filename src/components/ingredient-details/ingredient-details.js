@@ -9,7 +9,11 @@ function IngredientDetails({ item }) {
       >
         Детали ингредиента
       </h2>
-      <img src={item.image_large} alt={item.name} />
+      <img
+        src={item.image_large}
+        alt={item.name}
+        className={ingredientDetailsStyles.image}
+      />
       <p className="text text_type_main-medium mt-4 mb-8">{item.name}</p>
       <ul className={`${ingredientDetailsStyles.list} mb-5`}>
         <li className={ingredientDetailsStyles.listItem}>

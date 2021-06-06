@@ -12,6 +12,19 @@
   max-height: calc(100vh - 536px);
 }
 
+.listItem {
+  composes: mb-4 from global;
+  composes: mt-4 from global;
+}
+
+.listItem:first-child {
+  margin-top: 0;
+}
+
+.listItem:last-child {
+  margin-bottom: 0;
+}
+
 .buttonContainer {
   display: flex;
   justify-content: flex-end;

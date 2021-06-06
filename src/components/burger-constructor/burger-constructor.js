@@ -11,16 +11,15 @@ function BurgerConstructor({ data, onConfirmClick }) {
   const elements = data.slice(1, data.length - 1);
   return (
     <section className={`${constructorStyles.section} mt-25 pl-4`}>
-      <ConstructorItem item={bun} type="top" isLocked />
+      <ConstructorItem item={bun} type="top" isLocked isTop />
       <ul className={constructorStyles.list}>
         {elements.map((item) => (
-          <li key={item._id} className={`${constructorStyles.listItem}`}>
+          <li key={item._id} className={constructorStyles.listItem}>
             <ConstructorItem item={item} />
           </li>
         ))}
       </ul>
-      <ConstructorItem item={bun} type="bottom" isLocked />
-
+      <ConstructorItem item={bun} type="bottom" isLocked isBottom />
       <div className={`${constructorStyles.buttonContainer} mt-9 pr-4`}>
         <div className={`${constructorStyles.priceContainer} mr-10`}>
           <span className="text text_type_digits-medium mr-2">610</span>

@@ -32,3 +32,7 @@
   composes: text_type_digits-default from global;
   composes: text_color_inactive from global;
 }
+
+.image {
+  min-height: 240px;
+}
