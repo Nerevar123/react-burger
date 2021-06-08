@@ -2,19 +2,13 @@ import cn from "classnames";
 import PropTypes from "prop-types";
 import modalOverlayStyles from "./modal-overlay.module.css";
 
-function ModalOverlay({ isOpen, children, onClose }) {
-  function handleOverlayClick(e) {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  }
-
+function ModalOverlay({ isOpen, children, onOverlayClick }) {
   return (
     <section
       className={cn(modalOverlayStyles.modal, {
         [modalOverlayStyles.modalOpened]: isOpen,
       })}
-      onClick={handleOverlayClick}
+      onClick={onOverlayClick}
     >
       {children}
     </section>
@@ -23,7 +17,7 @@ function ModalOverlay({ isOpen, children, onClose }) {
 
 ModalOverlay.propTypes = {
   isOpen: PropTypes.bool,
-  onClose: PropTypes.func,
+  onOverlayClick: PropTypes.func,
 };
 
 export default ModalOverlay;

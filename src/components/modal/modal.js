@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -8,8 +8,6 @@ import modalStyles from "./modal.module.css";
 const modalRoot = document.getElementById("react-modals");
 
 function Modal({ isOpen, onClose, children }) {
-  const wrapperRef = useRef(null);
-
   useEffect(() => {
     function closeModalByEsc(e) {
       if (e.key === "Escape") {
@@ -24,9 +22,19 @@ function Modal({ isOpen, onClose, children }) {
     };
   }, [onClose]);
 
+  function handleOverlayClick(e) {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  }
+
   return ReactDOM.createPortal(
-    <ModalOverlay isOpen={isOpen} onClose={onClose}>
-      <div className={`${modalStyles.modalContainer} p-10`} ref={wrapperRef}>
+    <ModalOverlay
+      isOpen={isOpen}
+      onClose={onClose}
+      onOverlayClick={handleOverlayClick}
+    >
+      <div className={`${modalStyles.modalContainer} p-10`}>
         {children}
         <button
           className={modalStyles.closeButton}

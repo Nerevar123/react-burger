@@ -22,15 +22,11 @@
 }
 
 .itemText {
-  composes: text from global;
-  composes: text_type_main-default from global;
-  composes: text_color_inactive from global;
+  composes: text text_type_main-default text_color_inactive from global;
 }
 
 .itemNumbers {
-  composes: text from global;
-  composes: text_type_digits-default from global;
-  composes: text_color_inactive from global;
+  composes: text text_type_digits-default text_color_inactive from global;
 }
 
 .image {
