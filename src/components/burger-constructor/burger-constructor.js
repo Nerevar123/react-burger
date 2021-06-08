@@ -6,28 +6,26 @@ import {
 import ConstructorItem from "../constructor-item/constructor-item";
 import constructorStyles from "./burger-constructor.module.css";
 
-function BurgerConstructor({ data }) {
-  const firstElement = data[0];
-  const lastElement = data[data.length - 1];
+function BurgerConstructor({ data, onConfirmClick }) {
+  const bun = data[0];
   const elements = data.slice(1, data.length - 1);
   return (
     <section className={`${constructorStyles.section} mt-25 pl-4`}>
-      <ConstructorItem item={firstElement} type="top" isLocked />
+      <ConstructorItem item={bun} type="top" isLocked isTop />
       <ul className={constructorStyles.list}>
         {elements.map((item) => (
-          <li key={item._id} className={`${constructorStyles.listItem}`}>
+          <li key={item._id} className={constructorStyles.listItem}>
             <ConstructorItem item={item} />
           </li>
         ))}
       </ul>
-      <ConstructorItem item={lastElement} type="bottom" isLocked />
-
+      <ConstructorItem item={bun} type="bottom" isLocked isBottom />
       <div className={`${constructorStyles.buttonContainer} mt-9 pr-4`}>
         <div className={`${constructorStyles.priceContainer} mr-10`}>
           <span className="text text_type_digits-medium mr-2">610</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={onConfirmClick}>
           Оформить заказ
         </Button>
       </div>
@@ -38,13 +36,10 @@ function BurgerConstructor({ data }) {
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
       type: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
     })
   ),
+  onConfirmClick: PropTypes.func,
 };
 
 export default BurgerConstructor;

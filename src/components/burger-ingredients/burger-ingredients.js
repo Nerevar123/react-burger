@@ -4,7 +4,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsList from "../ingredients-list/ingredients-list";
 import ingredientsStyles from "./burger-ingredients.module.css";
 
-function BurgerIngredients({ data }) {
+function BurgerIngredients({ data, onIngredientClick }) {
   const [current, setCurrent] = useState("one");
 
   const buns = data.filter((item) => item.type === "bun");
@@ -32,9 +32,21 @@ function BurgerIngredients({ data }) {
         </li>
       </ul>
       <div className={ingredientsStyles.cards}>
-        <IngredientsList items={buns} title="Булки" />
-        <IngredientsList items={sauces} title="Соусы" />
-        <IngredientsList items={main} title="Начинки" />
+        <IngredientsList
+          items={buns}
+          title="Булки"
+          onIngredientClick={onIngredientClick}
+        />
+        <IngredientsList
+          items={sauces}
+          title="Соусы"
+          onIngredientClick={onIngredientClick}
+        />
+        <IngredientsList
+          items={main}
+          title="Начинки"
+          onIngredientClick={onIngredientClick}
+        />
       </div>
     </section>
   );
@@ -48,8 +60,14 @@ BurgerIngredients.propTypes = {
       type: PropTypes.string.isRequired,
       price: PropTypes.number.isRequired,
       image: PropTypes.string.isRequired,
+      image_large: PropTypes.string.isRequired,
+      calories: PropTypes.number.isRequired,
+      proteins: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+      carbohydrates: PropTypes.number.isRequired,
     })
   ),
+  onIngredientClick: PropTypes.func,
 };
 
 export default BurgerIngredients;

@@ -5,9 +5,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientStyles from "./ingredient.module.css";
 
-function Ingredient({ item }) {
+function Ingredient({ item, onIngredientClick }) {
   return (
-    <article className={ingredientStyles.item}>
+    <article className={ingredientStyles.item} onClick={() => onIngredientClick(item)}>
       <img src={item.image} alt={item.name} className="pr-4 pl-4 mb-2" />
       <div className={`${ingredientStyles.priceContainer} mb-3`}>
         <span
@@ -28,13 +28,21 @@ function Ingredient({ item }) {
 }
 
 Ingredient.propTypes = {
-  item: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-  }),
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      image_large: PropTypes.string.isRequired,
+      calories: PropTypes.number.isRequired,
+      proteins: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+      carbohydrates: PropTypes.number.isRequired,
+    })
+  ),
+  onIngredientClick: PropTypes.func,
 };
 
 export default Ingredient;

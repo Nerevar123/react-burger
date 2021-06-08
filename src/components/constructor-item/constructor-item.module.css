@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  composes: mb-4 from global;
 }
 
 .wrapper {
