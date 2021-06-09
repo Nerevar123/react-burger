@@ -1,14 +1,19 @@
+import { useContext } from "react";
 import PropTypes from "prop-types";
 import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstructorItem from "../constructor-item/constructor-item";
+import { IngredientsContext } from "../../contexts/ingredients-context";
 import constructorStyles from "./burger-constructor.module.css";
 
-function BurgerConstructor({ data, onConfirmClick }) {
-  const bun = data[0];
-  const elements = data.slice(1, data.length - 1);
+function BurgerConstructor({ onConfirmClick }) {
+  const data = useContext(IngredientsContext);
+
+  const bun = data.find(item => item.type === 'bun');
+  const elements = data.filter(item => item.type !== 'bun');
+
   return (
     <section className={`${constructorStyles.section} mt-25 pl-4`}>
       <ConstructorItem item={bun} type="top" isLocked isTop />
@@ -34,11 +39,6 @@ function BurgerConstructor({ data, onConfirmClick }) {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string.isRequired,
-    })
-  ),
   onConfirmClick: PropTypes.func,
 };
 
