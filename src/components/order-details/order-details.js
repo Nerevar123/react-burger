@@ -22,7 +22,7 @@ function OrderDetails({ isOpen, orderNumber }) {
 
 OrderDetails.propTypes = {
   isOpen: PropTypes.bool,
-  orderNumber: PropTypes.number,
+  orderNumber: PropTypes.number.isRequired,
 };
 
 export default OrderDetails;

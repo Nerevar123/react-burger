@@ -55,7 +55,7 @@ function BurgerIngredients({ onIngredientClick }) {
 }
 
 BurgerIngredients.propTypes = {
-  onIngredientClick: PropTypes.func,
+  onIngredientClick: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;

@@ -11,8 +11,9 @@ import constructorStyles from "./burger-constructor.module.css";
 function BurgerConstructor({ onConfirmClick }) {
   const data = useContext(IngredientsContext);
 
-  const bun = data.find(item => item.type === 'bun');
-  const elements = data.filter(item => item.type !== 'bun');
+  const bun = data.find((item) => item.type === "bun");
+  const elements = data.filter((item) => item.type !== "bun");
+  const finalPrice = data.reduce((a, b) => a + (b.price || 0), 0) + bun.price;
 
   return (
     <section className={`${constructorStyles.section} mt-25 pl-4`}>
@@ -27,7 +28,7 @@ function BurgerConstructor({ onConfirmClick }) {
       <ConstructorItem item={bun} type="bottom" isLocked isBottom />
       <div className={`${constructorStyles.buttonContainer} mt-9 pr-4`}>
         <div className={`${constructorStyles.priceContainer} mr-10`}>
-          <span className="text text_type_digits-medium mr-2">610</span>
+          <span className="text text_type_digits-medium mr-2">{finalPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
         <Button type="primary" size="large" onClick={onConfirmClick}>
@@ -39,7 +40,7 @@ function BurgerConstructor({ onConfirmClick }) {
 }
 
 BurgerConstructor.propTypes = {
-  onConfirmClick: PropTypes.func,
+  onConfirmClick: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;
