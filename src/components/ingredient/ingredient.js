@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useDrag } from 'react-dnd';
 import {
   CurrencyIcon,
   Counter,
@@ -6,10 +7,20 @@ import {
 import ingredientStyles from "./ingredient.module.css";
 
 function Ingredient({ item, onIngredientClick }) {
+  const [{ opacity }, ref] = useDrag({
+    type: 'ingredients',
+    item:  item,
+    collect: monitor => ({
+      opacity: monitor.isDragging() ? 0.5 : 1
+    })
+  });
+
   return (
     <article
       className={ingredientStyles.item}
       onClick={() => onIngredientClick(item)}
+      ref={ref}
+      style={{ opacity }}
     >
       <img src={item.image} alt={item.name} className="pr-4 pl-4 mb-2" />
       <div className={`${ingredientStyles.priceContainer} mb-3`}>
@@ -25,7 +36,7 @@ function Ingredient({ item, onIngredientClick }) {
       >
         {item.name}
       </p>
-      <Counter count={1} size="default" />
+      {item.qty && <Counter count={item.qty} size="default" />}
     </article>
   );
 }

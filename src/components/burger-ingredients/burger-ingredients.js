@@ -1,17 +1,19 @@
-import { useState, useContext } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsList from "../ingredients-list/ingredients-list";
-import { IngredientsContext } from "../../contexts/ingredients-context";
+import { getIngredients } from "../../services/actions/ingredients";
 import ingredientsStyles from "./burger-ingredients.module.css";
 
 function BurgerIngredients({ onIngredientClick }) {
-  const data = useContext(IngredientsContext);
   const [current, setCurrent] = useState("one");
 
-  const buns = data.filter((item) => item.type === "bun");
-  const sauces = data.filter((item) => item.type === "sauce");
-  const main = data.filter((item) => item.type === "main");
+  const dispatch = useDispatch();
+  const { buns, sauces, main } = useSelector((state) => state.ingredients);
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <section className={ingredientsStyles.section}>

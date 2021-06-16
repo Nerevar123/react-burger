@@ -1,6 +1,6 @@
 import { baseUrl, checkError, headers } from "./utils";
 
-export const getData = () => {
+export const getIngredientsRequest = () => {
   return fetch(`${baseUrl}/ingredients`, {
     headers: headers,
   }).then(checkError);
