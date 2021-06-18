@@ -1,4 +1,5 @@
-import { useContext } from "react";
+import { useCallback } from "react";
+import cn from "classnames";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
@@ -7,18 +8,15 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstructorItem from "../constructor-item/constructor-item";
-import { IngredientsContext } from "../../contexts/ingredients-context";
+import ConstructorBunItem from "../constructor-bun-item/constructor-bun-item";
 import constructorStyles from "./burger-constructor.module.css";
 import {
   ADD_INGREDIENT,
-  REMOVE_INGREDIENT,
   ADD_BUN,
-  INCREASE_COUNTER,
+  MOVE_INGREDIENT,
 } from "../../services/actions/ingredients";
 
 function BurgerConstructor({ onConfirmClick }) {
-  // const data = useContext(IngredientsContext);
-
   const dispatch = useDispatch();
   const { bun, ordered, finalPrice } = useSelector(
     (state) => state.ingredients
@@ -34,22 +32,6 @@ function BurgerConstructor({ onConfirmClick }) {
           type: ADD_INGREDIENT,
           item: item,
         });
-    dispatch({
-      type: INCREASE_COUNTER,
-      id: item._id,
-    });
-    // dispatch({
-    //   type: REMOVE_INGREDIENT,
-    //   ...item
-    // })
-  };
-
-  const sortItem = (item) => {
-    console.log(item);
-    //  dispatch({
-    //       type: ADD_INGREDIENT,
-    //       item: item,
-    //     });
   };
 
   const [{ isHover }, dropTarget] = useDrop({
@@ -62,31 +44,49 @@ function BurgerConstructor({ onConfirmClick }) {
     },
   });
 
-  // const [{ isHoverr }, sortDropTarget] = useDrop({
-  //   accept: "constructorItems",
-  //   collect: (monitor) => ({
-  //     isHover: monitor.isOver(),
-  //   }),
-  //   drop(item) {
-  //     sortItem(item);
-  //   },
-  // });
+  const findCard = useCallback(
+    (id) => {
+      const card = ordered.filter((c) => c.id === id)[0];
+      return {
+        card,
+        index: ordered.indexOf(card),
+      };
+    },
+    [ordered]
+  );
 
-  // const bun = data.find((item) => item.type === "bun");
-  // const elements = data.filter((item) => item.type !== "bun");
-  // const finalPrice = data.reduce((a, b) => a + (b.price || 0), 0) + bun.price;
+  const moveCard = useCallback(
+    (id, atIndex) => {
+      const { index } = findCard(id);
+      dispatch({
+        type: MOVE_INGREDIENT,
+        index: index,
+        atIndex: atIndex,
+      });
+    },
+    [findCard, dispatch]
+  );
+
+  const [, drop] = useDrop(() => ({ accept: "constructorItems" }));
 
   return (
-    <section className={`${constructorStyles.section} mt-25 pl-4`}>
-      <ConstructorItem item={bun} type="top" isLocked isTop />
-      <ul className={constructorStyles.list} ref={dropTarget}>
-        {ordered.map((item, i) => (
-          <li key={i} className={constructorStyles.listItem}>
-            <ConstructorItem item={item} />
-          </li>
+    <section
+      className={`${constructorStyles.section} mt-25 pl-4`}
+      ref={dropTarget}
+    >
+      <ConstructorBunItem element={bun} type="top" isTop />
+      <ul className={cn(constructorStyles.list, {[constructorStyles.listActive]: isHover})} ref={drop}>
+        {ordered.map((card, i) => (
+          <ConstructorItem
+            key={card.id}
+            id={card.id}
+            element={card}
+            moveCard={moveCard}
+            findCard={findCard}
+          />
         ))}
       </ul>
-      <ConstructorItem item={bun} type="bottom" isLocked isBottom />
+      <ConstructorBunItem element={bun} type="bottom" isBottom />
       <div className={`${constructorStyles.buttonContainer} mt-9 pr-4`}>
         <div className={`${constructorStyles.priceContainer} mr-10`}>
           <span className="text text_type_digits-medium mr-2">

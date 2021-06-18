@@ -1,3 +1,4 @@
+import update from "immutability-helper";
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -5,12 +6,11 @@ import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
   ADD_BUN,
-  INCREASE_COUNTER,
+  MOVE_INGREDIENT,
   DECREASE_COUNTER,
 } from "../actions/ingredients";
 
 const initialState = {
-  ingredients: [],
   buns: [],
   sauces: [],
   main: [],
@@ -34,7 +34,6 @@ export const ingredientsReducer = (state = initialState, action) => {
     case GET_INGREDIENTS_SUCCESS: {
       return {
         ...state,
-        ingredients: action.ingredients,
         buns: action.ingredients.filter((item) => item.type === "bun"),
         sauces: action.ingredients.filter((item) => item.type === "sauce"),
         main: action.ingredients.filter((item) => item.type === "main"),
@@ -48,16 +47,18 @@ export const ingredientsReducer = (state = initialState, action) => {
     case REMOVE_INGREDIENT: {
       return {
         ...state,
-        ordered: state.ordered.filter((item) => item._id !== action.item._id),
+        ordered: state.ordered.filter((item) => item.id !== action.item.id),
         finalPrice:
           typeof action.item.price == "number" &&
           state.finalPrice - action.item.price,
       };
     }
     case ADD_INGREDIENT: {
+      const time = new Date().getTime().toString();
+      const newItem = { ...action.item, id: time };
       return {
         ...state,
-        ordered: [...state.ordered, action.item],
+        ordered: [...state.ordered, newItem],
         finalPrice:
           typeof action.item.price == "number" &&
           state.finalPrice + action.item.price,
@@ -73,22 +74,36 @@ export const ingredientsReducer = (state = initialState, action) => {
           state.finalPrice - oldPrice + action.item.price * 2,
       };
     }
-    case INCREASE_COUNTER: {
+    case MOVE_INGREDIENT: {
+      const newOrdered = update(state.ordered, {
+        $splice: [
+          [action.index, 1],
+          [action.atIndex, 0, state.ordered[action.index]],
+        ],
+      });
+
       return {
         ...state,
-        sauces: [...state.sauces].map(item =>
-          item._id === action.id ? { ...item, qty: (item.qty && ++item.qty) || 1 } : item
-        )
+        ordered: newOrdered,
       };
     }
-    case DECREASE_COUNTER: {
-      return {
-        ...state,
-        sauces: [...state.sauces].map(item =>
-          item._id === action.id ? { ...item, qty: (item.qty && --item.qty) || 1 } : item
-        )
-      };
-    }
+
+    // case INCREASE_COUNTER: {
+    //   return {
+    //     ...state,
+    //     sauces: [...state.sauces].map(item =>
+    //       item._id === action.id ? { ...item, qty: (item.qty && ++item.qty) || 1 } : item
+    //     )
+    //   };
+    // }
+    // case DECREASE_COUNTER: {
+    //   return {
+    //     ...state,
+    //     sauces: [...state.sauces].map(item =>
+    //       item._id === action.id ? { ...item, qty: (item.qty && --item.qty) || 1 } : item
+    //     )
+    //   };
+    // }
     default: {
       return state;
     }

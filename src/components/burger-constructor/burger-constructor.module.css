@@ -11,19 +11,7 @@
   overflow-y: scroll;
   max-height: calc(100vh - 536px);
   height: 100%;
-}
-
-.listItem {
-  composes: mb-4 from global;
-  composes: mt-4 from global;
-}
-
-.listItem:first-child {
-  margin-top: 0;
-}
-
-.listItem:last-child {
-  margin-bottom: 0;
+  transition: 0.5s;
 }
 
 .buttonContainer {

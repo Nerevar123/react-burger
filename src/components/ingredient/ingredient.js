@@ -1,5 +1,7 @@
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useDrag } from 'react-dnd';
+import { useDrag } from "react-dnd";
+import { useSelector } from "react-redux";
 import {
   CurrencyIcon,
   Counter,
@@ -7,12 +9,22 @@ import {
 import ingredientStyles from "./ingredient.module.css";
 
 function Ingredient({ item, onIngredientClick }) {
+  const [counter, setCounter] = useState(null);
+  const { ordered, bun } = useSelector((state) => state.ingredients);
+  useEffect(() => {
+    if (item.type === "bun") {
+      setCounter(bun._id === item._id ? 1 : 0);
+    } else {
+      setCounter(ordered.filter((el) => el._id === item._id).length);
+    }
+  }, [bun._id, item._id, item.type, ordered]);
+
   const [{ opacity }, ref] = useDrag({
-    type: 'ingredients',
-    item:  item,
-    collect: monitor => ({
-      opacity: monitor.isDragging() ? 0.5 : 1
-    })
+    type: "ingredients",
+    item: item,
+    collect: (monitor) => ({
+      opacity: monitor.isDragging() ? 0.5 : 1,
+    }),
   });
 
   return (
@@ -36,7 +48,7 @@ function Ingredient({ item, onIngredientClick }) {
       >
         {item.name}
       </p>
-      {item.qty && <Counter count={item.qty} size="default" />}
+      {counter > 0 && <Counter count={counter} size="default" />}
     </article>
   );
 }

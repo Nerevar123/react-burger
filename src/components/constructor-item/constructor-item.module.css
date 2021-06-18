@@ -1,17 +1,24 @@
-/* .container {
+.listItem {
+  composes: mb-4 from global;
+  composes: mt-4 from global;
+}
+
+.listItem:first-child {
+  margin-top: 0;
+}
+
+.listItem:last-child {
+  margin-bottom: 0;
+}
+
+.container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-} */
+}
 
 .wrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.drag {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
