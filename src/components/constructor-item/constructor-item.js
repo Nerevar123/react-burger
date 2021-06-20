@@ -25,7 +25,9 @@ function ConstructorItem({ item, type, isLocked, isTop, isBottom }) {
         })}
       >
         <ConstructorElement
-          text={item.name}
+          text={`${item.name} ${isTop ? "(верх)" : ""} ${
+            isBottom ? "(низ)" : ""
+          }`}
           price={item.price}
           thumbnail={item.image}
           type={type}

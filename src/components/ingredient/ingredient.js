@@ -7,7 +7,10 @@ import ingredientStyles from "./ingredient.module.css";
 
 function Ingredient({ item, onIngredientClick }) {
   return (
-    <article className={ingredientStyles.item} onClick={() => onIngredientClick(item)}>
+    <article
+      className={ingredientStyles.item}
+      onClick={() => onIngredientClick(item)}
+    >
       <img src={item.image} alt={item.name} className="pr-4 pl-4 mb-2" />
       <div className={`${ingredientStyles.priceContainer} mb-3`}>
         <span
@@ -28,21 +31,12 @@ function Ingredient({ item, onIngredientClick }) {
 }
 
 Ingredient.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      calories: PropTypes.number.isRequired,
-      proteins: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-    })
-  ),
-  onIngredientClick: PropTypes.func,
+  item: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+  }),
+  onIngredientClick: PropTypes.func.isRequired,
 };
 
 export default Ingredient;

@@ -8,22 +8,23 @@ import Modal from "../modal/modal";
 import Preloader from "../preloader/preloader";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../order-details/order-details";
-import { getData } from "../../utils/api";
+import { getData, postOrder } from "../../utils/api";
+import { IngredientsContext } from "../../contexts/ingredients-context";
 import appStyles from "./app.module.css";
 
 function App() {
-  const [data, setData] = useState(null);
+  const [order, setOrder] = useState(null);
+  const [orderNumber, setOrderNumber] = useState(null);
   const [isOrderModalOpen, setOrderModalOpen] = useState(false);
   const [isIngredientModalOpen, setIngredientModalOpen] = useState(false);
   const [currentIngredient, setCurrentIngredient] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
-  const orderNumber = "034536";
 
   useEffect(() => {
     getData()
       .then(({ data }) => {
-        setData(data);
+        setOrder(data);
       })
       .catch((err) => console.log(err))
       .finally(() => {
@@ -36,8 +37,14 @@ function App() {
     setIngredientModalOpen(true);
   };
 
-  const handleConfirmClick = () => {
-    setOrderModalOpen(true);
+  const handleConfirmClick = (data) => {
+    const orderItems = order.map((item) => item._id);
+    postOrder({ ingredients: orderItems })
+      .then(({ order }) => {
+        setOrderNumber(order.number);
+        setOrderModalOpen(true);
+      })
+      .catch((err) => console.log(err));
   };
 
   const closeAllModal = () => {
@@ -50,20 +57,14 @@ function App() {
   }
 
   return (
-    <>
+    <IngredientsContext.Provider value={order}>
       <Router history={history} basename="/">
         <AppHeader />
         <main className={appStyles.main}>
           <Switch>
             <Route exact path="/">
-              <BurgerIngredients
-                data={data}
-                onIngredientClick={onIngredientClick}
-              />
-              <BurgerConstructor
-                data={data}
-                onConfirmClick={handleConfirmClick}
-              />
+              <BurgerIngredients onIngredientClick={onIngredientClick} />
+              <BurgerConstructor onConfirmClick={handleConfirmClick} />
             </Route>
           </Switch>
         </main>
@@ -78,7 +79,7 @@ function App() {
           <OrderDetails isOpen={isOrderModalOpen} orderNumber={orderNumber} />
         </Modal>
       )}
-    </>
+    </IngredientsContext.Provider>
   );
 }
 
