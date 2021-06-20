@@ -7,9 +7,8 @@
   margin: 0 auto;
 }
 
-/* @media screen and (max-width: 1250px) {
+@media screen and (max-width: 1300px) {
   .main {
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: unset;
   }
-} */
+}

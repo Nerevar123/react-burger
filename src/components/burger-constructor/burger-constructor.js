@@ -9,6 +9,7 @@ import {
 import ConstructorItem from "../constructor-item/constructor-item";
 import ConstructorBunItem from "../constructor-bun-item/constructor-bun-item";
 import { postOrder } from "../../services/actions/ingredients";
+import useWindowSize from "../../hooks/useWindowSize";
 import {
   ADD_INGREDIENT,
   ADD_BUN,
@@ -17,6 +18,7 @@ import {
 import constructorStyles from "./burger-constructor.module.css";
 
 function BurgerConstructor() {
+  const size = useWindowSize();
   const dispatch = useDispatch();
   const { bun, ordered, finalPrice } = useSelector(
     (state) => state.ingredients
@@ -100,7 +102,15 @@ function BurgerConstructor() {
         ))}
       </ul>
       <ConstructorBunItem element={bun} type="bottom" isBottom />
-      <div className={`${constructorStyles.buttonContainer} mt-9 pr-4`}>
+      <div
+        className={cn(
+          constructorStyles.buttonContainer,
+          {
+            "mt-9 pr-4": size.width > 750,
+          },
+          { "pt-4 pb-4 pr-2 pl-2": size.width < 750 }
+        )}
+      >
         <div className={`${constructorStyles.priceContainer} mr-10`}>
           <span className="text text_type_digits-medium mr-2">
             {finalPrice}

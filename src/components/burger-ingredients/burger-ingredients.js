@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import cn from "classnames";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsList from "../ingredients-list/ingredients-list";
 import { getIngredients } from "../../services/actions/ingredients";
@@ -35,7 +36,11 @@ function BurgerIngredients() {
     <section className={ingredientsStyles.section}>
       <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
       <ul className={`${ingredientsStyles.tabList} mb-10`}>
-        <li className={ingredientsStyles.tabItem}>
+        <li
+          className={cn(ingredientsStyles.tabItem, {
+            [ingredientsStyles.tabItemActive]: current === "buns",
+          })}
+        >
           <Tab
             value="buns"
             active={current === "buns"}
@@ -44,7 +49,11 @@ function BurgerIngredients() {
             Булки
           </Tab>
         </li>
-        <li className={ingredientsStyles.tabItem}>
+        <li
+          className={cn(ingredientsStyles.tabItem, {
+            [ingredientsStyles.tabItemActive]: current === "sauces",
+          })}
+        >
           <Tab
             value="sauces"
             active={current === "sauces"}
@@ -53,7 +62,11 @@ function BurgerIngredients() {
             Соусы
           </Tab>
         </li>
-        <li className={ingredientsStyles.tabItem}>
+        <li
+          className={cn(ingredientsStyles.tabItem, {
+            [ingredientsStyles.tabItemActive]: current === "main",
+          })}
+        >
           <Tab
             value="main"
             active={current === "main"}
