@@ -6,7 +6,7 @@ export const getIngredientsRequest = () => {
   }).then(checkError);
 };
 
-export const postOrder = (data) => {
+export const postOrderRequest = (data) => {
   return fetch(`${baseUrl}/orders`, {
     method: "POST",
     headers: headers,

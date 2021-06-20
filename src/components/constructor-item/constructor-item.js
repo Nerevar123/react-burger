@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import { useDispatch } from "react-redux";
@@ -12,14 +13,20 @@ import constructorItemStyles from "./constructor-item.module.css";
 function ConstructorItem({ element, type, findCard, moveCard, id }) {
   const dispatch = useDispatch();
 
-  const removeItem = (item) => {
-    dispatch({
-      type: REMOVE_INGREDIENT,
-      item: item,
-    });
-  };
+  const removeItem = useCallback(
+    (item) => {
+      dispatch({
+        type: REMOVE_INGREDIENT,
+        item: item,
+      });
+    },
+    [dispatch]
+  );
 
-  const originalIndex = findCard(id).index;
+  const originalIndex = useMemo(() => {
+    return findCard(id).index;
+  }, [findCard, id]);
+
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: "constructorItems",

@@ -4,10 +4,11 @@ import Ingredient from "../ingredient/ingredient";
 import Loader from "../loader/loader";
 import ingredientListStyles from "./ingredients-list.module.css";
 
-function IngredientsList({ items, title, tabRef, onIngredientClick }) {
+function IngredientsList({ items, title, tabRef }) {
   const ingredientsRequest = useSelector(
     (state) => state.ingredients.ingredientsRequest
   );
+
   return (
     <>
       <h2 className="text text_type_main-medium" ref={tabRef}>
@@ -19,7 +20,7 @@ function IngredientsList({ items, title, tabRef, onIngredientClick }) {
         <ul className={ingredientListStyles.list}>
           {items.map((item) => (
             <li className={ingredientListStyles.item} key={item._id}>
-              <Ingredient item={item} onIngredientClick={onIngredientClick} />
+              <Ingredient item={item} />
             </li>
           ))}
         </ul>
@@ -37,7 +38,6 @@ IngredientsList.propTypes = {
     })
   ),
   title: PropTypes.string.isRequired,
-  onIngredientClick: PropTypes.func.isRequired,
 };
 
 export default IngredientsList;

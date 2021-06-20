@@ -1,14 +1,15 @@
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import DoneAnimation from "../done-animation/done-animation";
 import orderDetailsStyles from "./order-details.module.css";
 
-function OrderDetails({ isOpen, orderNumber }) {
+function OrderDetails() {
+  const orderNumber = useSelector((state) => state.ingredients.orderNumber);
   return (
     <>
       <h2 className="text text_type_digits-large mt-20 mb-8">{orderNumber}</h2>
       <p className="text text_type_main-medium mb-15">идентификатор заказа</p>
       <div className={orderDetailsStyles.gif}>
-        {isOpen && <DoneAnimation />}
+        <DoneAnimation />
       </div>
       <p className="text text_type_main-default mt-15 mb-2">
         Ваш заказ начали готовить
@@ -19,10 +20,5 @@ function OrderDetails({ isOpen, orderNumber }) {
     </>
   );
 }
-
-OrderDetails.propTypes = {
-  isOpen: PropTypes.bool,
-  orderNumber: PropTypes.number.isRequired,
-};
 
 export default OrderDetails;

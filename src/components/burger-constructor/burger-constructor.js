@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import cn from "classnames";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import {
@@ -9,40 +8,39 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstructorItem from "../constructor-item/constructor-item";
 import ConstructorBunItem from "../constructor-bun-item/constructor-bun-item";
-import constructorStyles from "./burger-constructor.module.css";
+import { postOrder } from "../../services/actions/ingredients";
 import {
   ADD_INGREDIENT,
   ADD_BUN,
   MOVE_INGREDIENT,
 } from "../../services/actions/ingredients";
+import constructorStyles from "./burger-constructor.module.css";
 
-function BurgerConstructor({ onConfirmClick }) {
+function BurgerConstructor() {
   const dispatch = useDispatch();
   const { bun, ordered, finalPrice } = useSelector(
     (state) => state.ingredients
   );
 
-  const moveItem = (item) => {
-    item.type === "bun"
-      ? dispatch({
-          type: ADD_BUN,
-          item: item,
-        })
-      : dispatch({
-          type: ADD_INGREDIENT,
-          item: item,
-        });
-  };
+  const handleConfirmClick = useCallback(() => {
+    const orderItems = ordered.map((item) => item._id);
+    dispatch(postOrder({ ingredients: [...orderItems, bun._id] }));
+  }, [bun._id, dispatch, ordered]);
 
-  const [{ isHover }, dropTarget] = useDrop({
-    accept: "ingredients",
-    collect: (monitor) => ({
-      isHover: monitor.isOver(),
-    }),
-    drop(item) {
-      moveItem(item);
+  const moveItem = useCallback(
+    (item) => {
+      item.type === "bun"
+        ? dispatch({
+            type: ADD_BUN,
+            item: item,
+          })
+        : dispatch({
+            type: ADD_INGREDIENT,
+            item: item,
+          });
     },
-  });
+    [dispatch]
+  );
 
   const findCard = useCallback(
     (id) => {
@@ -67,6 +65,16 @@ function BurgerConstructor({ onConfirmClick }) {
     [findCard, dispatch]
   );
 
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "ingredients",
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(item) {
+      moveItem(item);
+    },
+  });
+
   const [, drop] = useDrop(() => ({ accept: "constructorItems" }));
 
   return (
@@ -75,7 +83,12 @@ function BurgerConstructor({ onConfirmClick }) {
       ref={dropTarget}
     >
       <ConstructorBunItem element={bun} type="top" isTop />
-      <ul className={cn(constructorStyles.list, {[constructorStyles.listActive]: isHover})} ref={drop}>
+      <ul
+        className={cn(constructorStyles.list, {
+          [constructorStyles.listActive]: isHover,
+        })}
+        ref={drop}
+      >
         {ordered.map((card, i) => (
           <ConstructorItem
             key={card.id}
@@ -94,16 +107,12 @@ function BurgerConstructor({ onConfirmClick }) {
           </span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="large" onClick={onConfirmClick}>
+        <Button type="primary" size="large" onClick={handleConfirmClick}>
           Оформить заказ
         </Button>
       </div>
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  onConfirmClick: PropTypes.func.isRequired,
-};
 
 export default BurgerConstructor;

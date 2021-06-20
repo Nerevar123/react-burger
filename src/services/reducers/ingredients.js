@@ -3,11 +3,16 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
+  POST_ORDER_REQUEST,
+  POST_ORDER_SUCCESS,
+  POST_ORDER_FAILED,
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
   ADD_BUN,
   MOVE_INGREDIENT,
-  DECREASE_COUNTER,
+  OPEN_INGREDIENT_MODAL,
+  OPEN_ORDER_MODAL,
+  CLOSE_MODALS,
 } from "../actions/ingredients";
 
 const initialState = {
@@ -19,8 +24,15 @@ const initialState = {
   bun: {},
   finalPrice: null,
 
+  currentModalItem: [],
+  orderNumber: null,
+  orderModalOpen: false,
+  ingredientModalOpen: false,
+
   ingredientsRequest: false,
   ingredientsFailed: false,
+  orderRequest: false,
+  orderRequestFailed: false,
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -43,6 +55,23 @@ export const ingredientsReducer = (state = initialState, action) => {
     }
     case GET_INGREDIENTS_FAILED: {
       return { ...state, ingredientsFailed: true, ingredientsRequest: false };
+    }
+    case POST_ORDER_REQUEST: {
+      return {
+        ...state,
+        orderRequest: true,
+      };
+    }
+    case POST_ORDER_SUCCESS: {
+      return {
+        ...state,
+        orderNumber: action.orderNumber,
+        orderRequestFailed: false,
+        orderRequest: false,
+      };
+    }
+    case POST_ORDER_FAILED: {
+      return { ...state, orderRequestFailed: true, orderRequest: false };
     }
     case REMOVE_INGREDIENT: {
       return {
@@ -87,23 +116,27 @@ export const ingredientsReducer = (state = initialState, action) => {
         ordered: newOrdered,
       };
     }
-
-    // case INCREASE_COUNTER: {
-    //   return {
-    //     ...state,
-    //     sauces: [...state.sauces].map(item =>
-    //       item._id === action.id ? { ...item, qty: (item.qty && ++item.qty) || 1 } : item
-    //     )
-    //   };
-    // }
-    // case DECREASE_COUNTER: {
-    //   return {
-    //     ...state,
-    //     sauces: [...state.sauces].map(item =>
-    //       item._id === action.id ? { ...item, qty: (item.qty && --item.qty) || 1 } : item
-    //     )
-    //   };
-    // }
+    case OPEN_INGREDIENT_MODAL: {
+      return {
+        ...state,
+        currentModalItem: action.item,
+        ingredientModalOpen: true,
+      };
+    }
+    case OPEN_ORDER_MODAL: {
+      return {
+        ...state,
+        orderModalOpen: true,
+      };
+    }
+    case CLOSE_MODALS: {
+      return {
+        ...state,
+        currentModalItem: [],
+        ingredientModalOpen: false,
+        orderModalOpen: false,
+      };
+    }
     default: {
       return state;
     }

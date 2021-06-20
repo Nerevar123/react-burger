@@ -1,16 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { OPEN_INGREDIENT_MODAL } from "../../services/actions/ingredients";
 import ingredientStyles from "./ingredient.module.css";
 
-function Ingredient({ item, onIngredientClick }) {
+function Ingredient({ item }) {
   const [counter, setCounter] = useState(null);
   const { ordered, bun } = useSelector((state) => state.ingredients);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (item.type === "bun") {
       setCounter(bun._id === item._id ? 1 : 0);
@@ -27,10 +30,17 @@ function Ingredient({ item, onIngredientClick }) {
     }),
   });
 
+  const onItemClick = useCallback(() => {
+    dispatch({
+      type: OPEN_INGREDIENT_MODAL,
+      item: item,
+    });
+  }, [dispatch, item]);
+
   return (
     <article
       className={ingredientStyles.item}
-      onClick={() => onIngredientClick(item)}
+      onClick={onItemClick}
       ref={ref}
       style={{ opacity }}
     >
@@ -59,7 +69,6 @@ Ingredient.propTypes = {
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
   }),
-  onIngredientClick: PropTypes.func.isRequired,
 };
 
 export default Ingredient;
