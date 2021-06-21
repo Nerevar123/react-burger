@@ -5,7 +5,7 @@ import {
   BurgerIcon,
   ListIcon,
   ProfileIcon,
-  MenuIcon,
+  // MenuIcon,
   CloseIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { TOGGLE_MENU } from "../../services/actions/header";
@@ -79,7 +79,7 @@ function AppHeaderMobile() {
               type="button"
               onClick={toggleMenu}
             >
-              <MenuIcon type="primary" />
+              {/* <MenuIcon type="primary" /> */}
             </button>
           </>
         )}
