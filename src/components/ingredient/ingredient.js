@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, memo } from "react";
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,7 @@ import {
 import { OPEN_INGREDIENT_MODAL } from "../../services/actions/ingredients";
 import ingredientStyles from "./ingredient.module.css";
 
-function Ingredient({ item }) {
+const Ingredient = memo(function Ingredient({ item }) {
   const [counter, setCounter] = useState(null);
   const { ordered, bun } = useSelector((state) => state.ingredients);
   const dispatch = useDispatch();
@@ -61,7 +61,7 @@ function Ingredient({ item }) {
       {counter > 0 && <Counter count={counter} size="default" />}
     </article>
   );
-}
+});
 
 Ingredient.propTypes = {
   item: PropTypes.shape({

@@ -102,25 +102,27 @@ function BurgerConstructor() {
         ))}
       </ul>
       <ConstructorBunItem element={bun} type="bottom" isBottom />
-      <div
-        className={cn(
-          constructorStyles.buttonContainer,
-          {
-            "mt-9 pr-4": size.width > 750,
-          },
-          { "pt-4 pb-4 pr-2 pl-2": size.width < 750 }
-        )}
-      >
-        <div className={`${constructorStyles.priceContainer} mr-10`}>
-          <span className="text text_type_digits-medium mr-2">
-            {finalPrice}
-          </span>
-          <CurrencyIcon type="primary" />
+      {bun._id && (
+        <div
+          className={cn(
+            constructorStyles.buttonContainer,
+            {
+              "mt-9 pr-4": size.width > 750,
+            },
+            { "pt-4 pb-4 pr-2 pl-2": size.width < 750 }
+          )}
+        >
+          <div className={`${constructorStyles.priceContainer} mr-10`}>
+            <span className="text text_type_digits-medium mr-2">
+              {finalPrice}
+            </span>
+            <CurrencyIcon type="primary" />
+          </div>
+          <Button type="primary" size="large" onClick={handleConfirmClick}>
+            Оформить заказ
+          </Button>
         </div>
-        <Button type="primary" size="large" onClick={handleConfirmClick}>
-          Оформить заказ
-        </Button>
-      </div>
+      )}
     </section>
   );
 }
