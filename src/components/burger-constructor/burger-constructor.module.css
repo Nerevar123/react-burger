@@ -8,21 +8,10 @@
   padding-left: 0;
   margin-top: 0;
   margin-bottom: 0;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: calc(100vh - 536px);
-}
-
-.listItem {
-  composes: mb-4 from global;
-  composes: mt-4 from global;
-}
-
-.listItem:first-child {
-  margin-top: 0;
-}
-
-.listItem:last-child {
-  margin-bottom: 0;
+  height: 100%;
+  transition: 0.5s;
 }
 
 .buttonContainer {
@@ -35,4 +24,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media screen and (max-width: 750px) {
+  .buttonContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: calc(100% - 16px);
+    justify-content: center;
+    background-color: #1c1c21;
+  }
 }

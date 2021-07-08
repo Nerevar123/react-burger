@@ -7,7 +7,19 @@
   margin-top: 0;
 }
 
+.tabItem {
+  transition: 0.3s ease-in-out;
+}
+
+.tabItemActive {
+  flex-grow: 1;
+}
+
 .cards {
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: calc(100vh - 336px);
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
 }

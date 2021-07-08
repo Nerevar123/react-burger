@@ -1,12 +1,16 @@
 import cn from "classnames";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import modalOverlayStyles from "./modal-overlay.module.css";
 
-function ModalOverlay({ isOpen, children, onOverlayClick }) {
+function ModalOverlay({ children, onOverlayClick }) {
+  const { ingredientModalOpen, orderModalOpen } = useSelector(
+    (state) => state.ingredients
+  );
   return (
     <section
       className={cn(modalOverlayStyles.modal, {
-        [modalOverlayStyles.modalOpened]: isOpen,
+        [modalOverlayStyles.modalOpened]: ingredientModalOpen || orderModalOpen,
       })}
       onClick={onOverlayClick}
     >
@@ -16,7 +20,6 @@ function ModalOverlay({ isOpen, children, onOverlayClick }) {
 }
 
 ModalOverlay.propTypes = {
-  isOpen: PropTypes.bool,
   onOverlayClick: PropTypes.func.isRequired,
 };
 

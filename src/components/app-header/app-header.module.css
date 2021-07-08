@@ -27,3 +27,58 @@
 .navItem:nth-child(2) {
   min-width: 36%;
 }
+
+@media screen and (max-width: 950px) {
+  .navItem:nth-child(2) {
+    min-width: unset;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .headerOpened {
+    height: 40px;
+    width: calc(100% - 16px);
+    position: absolute;
+    z-index: 20;
+  }
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .navList {
+    display: none;
+  }
+  .navListOpen {
+    height: calc(100vh - 64px);
+    width: 100%;
+    background-color: #1c1c21;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    top: 64px;
+    right: 0;
+  }
+  .menuIcon {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .closeButton {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 20px;
+    right: 8px;
+    cursor: pointer;
+  }
+}

@@ -1,15 +1,48 @@
+import { useState, useEffect, useCallback, memo } from "react";
 import PropTypes from "prop-types";
+import { useDrag } from "react-dnd";
+import { useDispatch, useSelector } from "react-redux";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { OPEN_INGREDIENT_MODAL } from "../../services/actions/ingredients";
 import ingredientStyles from "./ingredient.module.css";
 
-function Ingredient({ item, onIngredientClick }) {
+const Ingredient = memo(function Ingredient({ item }) {
+  const [counter, setCounter] = useState(null);
+  const { ordered, bun } = useSelector((state) => state.ingredients);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (item.type === "bun") {
+      setCounter(bun._id === item._id ? 1 : 0);
+    } else {
+      setCounter(ordered.filter((el) => el._id === item._id).length);
+    }
+  }, [bun._id, item._id, item.type, ordered]);
+
+  const [{ opacity }, ref] = useDrag({
+    type: "ingredients",
+    item: item,
+    collect: (monitor) => ({
+      opacity: monitor.isDragging() ? 0.5 : 1,
+    }),
+  });
+
+  const onItemClick = useCallback(() => {
+    dispatch({
+      type: OPEN_INGREDIENT_MODAL,
+      item: item,
+    });
+  }, [dispatch, item]);
+
   return (
     <article
       className={ingredientStyles.item}
-      onClick={() => onIngredientClick(item)}
+      onClick={onItemClick}
+      ref={ref}
+      style={{ opacity }}
     >
       <img src={item.image} alt={item.name} className="pr-4 pl-4 mb-2" />
       <div className={`${ingredientStyles.priceContainer} mb-3`}>
@@ -25,10 +58,10 @@ function Ingredient({ item, onIngredientClick }) {
       >
         {item.name}
       </p>
-      <Counter count={1} size="default" />
+      {counter > 0 && <Counter count={counter} size="default" />}
     </article>
   );
-}
+});
 
 Ingredient.propTypes = {
   item: PropTypes.shape({
@@ -36,7 +69,6 @@ Ingredient.propTypes = {
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
   }),
-  onIngredientClick: PropTypes.func.isRequired,
 };
 
 export default Ingredient;
