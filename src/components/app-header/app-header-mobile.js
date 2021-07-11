@@ -9,7 +9,7 @@ import {
   CloseIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { TOGGLE_MENU } from "../../services/actions/header";
-import NavItem from "../nav-item/nav-item";
+import { NavItem } from "../";
 import logoMobile from "../../images/logo-mobile.svg";
 import headerStyles from "./app-header.module.css";
 

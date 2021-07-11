@@ -2,7 +2,7 @@ import { useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch } from "react-redux";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import ModalOverlay from "../modal-overlay/modal-overlay";
+import { ModalOverlay } from "../";
 import { CLOSE_MODALS } from "../../services/actions/ingredients";
 import modalStyles from "./modal.module.css";
 

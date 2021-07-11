@@ -19,6 +19,14 @@
   flex-grow: 1;
 }
 
+.input__container {
+  flex-grow: 1;
+}
+
+.input_size_default {
+  min-width: 100%;
+}
+
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 12px;

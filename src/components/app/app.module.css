@@ -1,14 +1,4 @@
 .main {
-  display: grid;
-  grid-template-columns: repeat(2, 50%);
-  justify-content: center;
-  gap: 40px;
   max-width: 1200px;
   margin: 0 auto;
-}
-
-@media screen and (max-width: 1300px) {
-  .main {
-    grid-template-columns: unset;
-  }
 }

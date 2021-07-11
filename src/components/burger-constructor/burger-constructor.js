@@ -6,8 +6,7 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import ConstructorItem from "../constructor-item/constructor-item";
-import ConstructorBunItem from "../constructor-bun-item/constructor-bun-item";
+import { ConstructorItem, ConstructorBunItem } from "../";
 import { postOrder } from "../../services/actions/ingredients";
 import useWindowSize from "../../hooks/useWindowSize";
 import {

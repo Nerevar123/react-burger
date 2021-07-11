@@ -1,0 +1,8 @@
+.section {
+  max-width: 480px;
+  margin: 180px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

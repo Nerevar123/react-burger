@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientsList from "../ingredients-list/ingredients-list";
+import { IngredientsList } from "../";
 import { getIngredients } from "../../services/actions/ingredients";
 import useScroll from "../../hooks/useScroll";
 import ingredientsStyles from "./burger-ingredients.module.css";
