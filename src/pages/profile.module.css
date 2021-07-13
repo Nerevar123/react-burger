@@ -1,0 +1,12 @@
+.grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  justify-content: center;
+  gap: 60px;
+  max-width: 860px;
+  margin-top: 120px;
+}
+
+.input {
+  display: flex;
+}

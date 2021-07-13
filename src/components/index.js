@@ -17,6 +17,7 @@ import Feed from "./feed/feed";
 import Stats from "./stats/stats";
 import UserForm from "./user-form/user-form";
 import UserSection from "./user-section/user-section";
+import ProfileNav from "./profile-nav/profile-nav";
 
 export {
   AppHeader,
@@ -38,4 +39,5 @@ export {
   Stats,
   UserForm,
   UserSection,
+  ProfileNav,
 };

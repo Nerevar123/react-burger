@@ -3,7 +3,7 @@ import feedStyles from "./feed.module.css";
 function Feed() {
   return (
     <>
-      <div>123</div>
+      <section>123</section>
     </>
   );
 }

@@ -6,9 +6,11 @@ function UserForm({ children, buttonText, onSubmit }) {
     <form className={userFormStyles.form}>
       <fieldset className={userFormStyles.fieldset}>{children}</fieldset>
       <div className="mt-6 mb-20">
-        <Button type="primary" size="medium" onClick={onSubmit}>
-          {buttonText}
-        </Button>
+        {buttonText && (
+          <Button type="primary" size="medium" onClick={onSubmit}>
+            {buttonText}
+          </Button>
+        )}
       </div>
     </form>
   );

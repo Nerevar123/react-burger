@@ -1,13 +1,16 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UserSection, UserForm } from "../components";
+import { login } from "../services/actions/user";
 import styles from "./home.module.css";
 
 function Login({ validation }) {
+  const dispatch = useDispatch();
   const { values, errors, handleChange, resetForm } = validation;
 
   useEffect(() => {
@@ -19,7 +22,11 @@ function Login({ validation }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    dispatch(login({
+      name: values.name,
+      email: values.email,
+      password: values.password,
+    }));
   };
 
   return (
@@ -28,7 +35,7 @@ function Login({ validation }) {
         <div className={`${styles.input} mt-6`}>
           <Input
             onChange={handleChange}
-            value={values.email}
+            value={values.email || ""}
             name={"email"}
             type="email"
             placeholder="E-mail"
@@ -39,7 +46,7 @@ function Login({ validation }) {
         <div className={`${styles.input} mt-6`}>
           <PasswordInput
             onChange={handleChange}
-            value={values.password}
+            value={values.password || ""}
             name={"password"}
           />
         </div>

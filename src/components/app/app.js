@@ -16,6 +16,7 @@ import {
   RegisterPage,
   ForgotPasswordPage,
   ResetPasswordPage,
+  ProfilePage,
 } from "../../pages";
 
 import useWindowSize from "../../hooks/useWindowSize";
@@ -43,7 +44,9 @@ function App() {
             <Route exact path="/feed">
               <FeedPage />
             </Route>
-            <Route exact path="/profile"></Route>
+            <Route exact path="/profile">
+              <ProfilePage validation={validation} />
+            </Route>
             <Route exact path="/login">
               <LoginPage validation={validation} />
             </Route>

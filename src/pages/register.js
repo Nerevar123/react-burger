@@ -1,13 +1,16 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   PasswordInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UserSection, UserForm } from "../components";
+import { register } from "../services/actions/user";
 import styles from "./home.module.css";
 
 function RegisterPage({ validation }) {
+  const dispatch = useDispatch();
   const { values, errors, handleChange, resetForm } = validation;
 
   useEffect(() => {
@@ -19,7 +22,13 @@ function RegisterPage({ validation }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    dispatch(
+      register({
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      })
+    );
   };
 
   return (
@@ -28,7 +37,7 @@ function RegisterPage({ validation }) {
         <div className={`${styles.input} mt-6`}>
           <Input
             onChange={handleChange}
-            value={values.name}
+            value={values.name || ""}
             name={"name"}
             type="text"
             placeholder="Имя"
@@ -39,7 +48,7 @@ function RegisterPage({ validation }) {
         <div className={`${styles.input} mt-6`}>
           <Input
             onChange={handleChange}
-            value={values.email}
+            value={values.email || ""}
             name={"email"}
             type="email"
             placeholder="E-mail"
@@ -50,7 +59,7 @@ function RegisterPage({ validation }) {
         <div className={`${styles.input} mt-6`}>
           <PasswordInput
             onChange={handleChange}
-            value={values.password}
+            value={values.password || ""}
             name={"password"}
           />
         </div>

@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UserSection, UserForm } from "../components";
+import { resetPassword } from "../services/actions/user";
 import styles from "./home.module.css";
 
 function ForgotPasswordPage({ validation }) {
+  const dispatch = useDispatch();
   const { values, errors, handleChange, resetForm } = validation;
 
   useEffect(() => {
@@ -16,7 +19,11 @@ function ForgotPasswordPage({ validation }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    dispatch(
+      resetPassword({
+        email: values.email,
+      })
+    );
   };
 
   return (
@@ -25,7 +32,7 @@ function ForgotPasswordPage({ validation }) {
         <div className={`${styles.input} mt-6`}>
           <Input
             onChange={handleChange}
-            value={values.email}
+            value={values.email || ""}
             name={"email"}
             type="email"
             placeholder="Укажите e-mail"

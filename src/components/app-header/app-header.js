@@ -40,7 +40,7 @@ function AppHeader() {
             <NavItem
               text="Личный кабинет"
               icon={<ProfileIcon type="secondary" />}
-              to="/me"
+              to="/profile"
             />
           </li>
         </ul>
