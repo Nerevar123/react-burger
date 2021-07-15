@@ -9,6 +9,7 @@ import {
   FORGOT_PASSWORD_SUCCESS,
   RESET_PASSWORD_SUCCESS,
   SET_USER,
+  SET_USER_FAILED,
 } from "../actions/user";
 
 const initialState = {
@@ -73,7 +74,14 @@ export const userReducer = (state = initialState, action) => {
       return { ...state, loginFailed: true, loginRequest: false };
     }
     case LOGOUT_SUCCESS: {
-      return { ...state, isLoggedIn: false };
+      return {
+        ...state,
+        user: {},
+        refreshToken: null,
+        accessToken: null,
+        isLoggedIn: false,
+        loginSuccess: false,
+      };
     }
     case FORGOT_PASSWORD_SUCCESS: {
       return {
@@ -94,6 +102,12 @@ export const userReducer = (state = initialState, action) => {
         accessToken: action.accessToken,
         refreshToken: action.refreshToken,
         isLoggedIn: true,
+        isUserLoaded: true,
+      };
+    }
+    case SET_USER_FAILED: {
+      return {
+        ...state,
         isUserLoaded: true,
       };
     }

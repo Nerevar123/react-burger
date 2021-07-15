@@ -8,7 +8,7 @@ import {
   putUserRequest,
   tokenRequest,
 } from "../../utils/api";
-import { setCookie, getCookie } from "../../utils/utils";
+import { setCookie, getCookie, deleteCookie } from "../../utils/utils";
 
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
@@ -23,7 +23,7 @@ export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
 export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
 
 export const SET_USER = "SET_USER";
-
+export const SET_USER_FAILED = "SET_USER_FAILED";
 export function register(data) {
   return function (dispatch) {
     dispatch({
@@ -84,6 +84,7 @@ export function logout() {
           type: LOGOUT_SUCCESS,
         });
         localStorage.removeItem("refreshToken");
+        deleteCookie("token");
       })
       .catch((err) => {
         console.error(err);
@@ -139,6 +140,9 @@ export function getUser() {
           dispatch(refreshToken(getUser()));
         } else {
           console.error(err);
+          dispatch({
+            type: SET_USER_FAILED,
+          });
         }
       });
   };
