@@ -6,11 +6,15 @@ import { getUser } from "../../services/actions/user";
 
 export function ProtectedRoute({ children, ...rest }) {
   const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const { isLoggedIn, isUserLoaded } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
+
+  if (!isUserLoaded) {
+    return null;
+  }
 
   return (
     <Route

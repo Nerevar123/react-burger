@@ -25,6 +25,7 @@ const initialState = {
   loginFailed: false,
   forgotPasswordSuccess: false,
   resetPasswordSuccess: false,
+  isUserLoaded: false,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -93,6 +94,7 @@ export const userReducer = (state = initialState, action) => {
         accessToken: action.accessToken,
         refreshToken: action.refreshToken,
         isLoggedIn: true,
+        isUserLoaded: true,
       };
     }
     default: {

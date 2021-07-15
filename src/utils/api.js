@@ -49,7 +49,7 @@ export const getUserRequest = () => {
 
 export const putUserRequest = (data) => {
   return fetch(`${baseUrl}/auth/user`, {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       authorization: getCookie("token"),
