@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   PasswordInput,
   Input,
@@ -10,7 +10,9 @@ import { register } from "../services/actions/user";
 import styles from "./home.module.css";
 
 function RegisterPage({ validation }) {
+  const history = useHistory();
   const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((state) => state.user);
   const { values, errors, handleChange, resetForm } = validation;
 
   useEffect(() => {
@@ -19,6 +21,12 @@ function RegisterPage({ validation }) {
       resetForm();
     };
   }, [resetForm]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      history.push("/profile");
+    }
+  }, [history, isLoggedIn]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -21,6 +21,7 @@ function AppHeader() {
                 text="Конструктор"
                 icon={<BurgerIcon type="primary" />}
                 to="/"
+                exact
               />
               <NavItem
                 text="Лента заказов"

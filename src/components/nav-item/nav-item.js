@@ -2,11 +2,11 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import navItemStyles from "./nav-item.module.css";
 
-function NavItem({ text, icon, to, onClick }) {
+function NavItem({ text, icon, to, onClick, exact }) {
   return (
     <NavLink
-      exact
       to={to}
+      exact={exact}
       className={`${navItemStyles.link} p-5`}
       activeClassName={navItemStyles.linkActive}
       onClick={onClick}

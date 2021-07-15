@@ -33,61 +33,65 @@ function BurgerIngredients() {
   }, []);
 
   return (
-    <section className={ingredientsStyles.section}>
-      <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
-      <ul className={`${ingredientsStyles.tabList} mb-10`}>
-        <li
-          className={cn(ingredientsStyles.tabItem, {
-            [ingredientsStyles.tabItemActive]: current === "buns",
-          })}
-        >
-          <Tab
-            value="buns"
-            active={current === "buns"}
-            onClick={() => executeScroll(bunsRef)}
+    <>
+      <section className={ingredientsStyles.section}>
+        <h1 className="text text_type_main-large mt-10 mb-5">
+          Соберите бургер
+        </h1>
+        <ul className={`${ingredientsStyles.tabList} mb-10`}>
+          <li
+            className={cn(ingredientsStyles.tabItem, {
+              [ingredientsStyles.tabItemActive]: current === "buns",
+            })}
           >
-            Булки
-          </Tab>
-        </li>
-        <li
-          className={cn(ingredientsStyles.tabItem, {
-            [ingredientsStyles.tabItemActive]: current === "sauces",
-          })}
-        >
-          <Tab
-            value="sauces"
-            active={current === "sauces"}
-            onClick={() => executeScroll(saucesRef)}
+            <Tab
+              value="buns"
+              active={current === "buns"}
+              onClick={() => executeScroll(bunsRef)}
+            >
+              Булки
+            </Tab>
+          </li>
+          <li
+            className={cn(ingredientsStyles.tabItem, {
+              [ingredientsStyles.tabItemActive]: current === "sauces",
+            })}
           >
-            Соусы
-          </Tab>
-        </li>
-        <li
-          className={cn(ingredientsStyles.tabItem, {
-            [ingredientsStyles.tabItemActive]: current === "main",
-          })}
-        >
-          <Tab
-            value="main"
-            active={current === "main"}
-            onClick={() => executeScroll(mainRef)}
+            <Tab
+              value="sauces"
+              active={current === "sauces"}
+              onClick={() => executeScroll(saucesRef)}
+            >
+              Соусы
+            </Tab>
+          </li>
+          <li
+            className={cn(ingredientsStyles.tabItem, {
+              [ingredientsStyles.tabItemActive]: current === "main",
+            })}
           >
-            Начинки
-          </Tab>
-        </li>
-      </ul>
-      <ul className={ingredientsStyles.cards}>
-        <li ref={bunsRef}>
-          <IngredientsList items={buns} title="Булки" />
-        </li>
-        <li ref={saucesRef}>
-          <IngredientsList items={sauces} title="Соусы" />
-        </li>
-        <li ref={mainRef}>
-          <IngredientsList items={main} title="Начинки" />
-        </li>
-      </ul>
-    </section>
+            <Tab
+              value="main"
+              active={current === "main"}
+              onClick={() => executeScroll(mainRef)}
+            >
+              Начинки
+            </Tab>
+          </li>
+        </ul>
+        <ul className={ingredientsStyles.cards}>
+          <li ref={bunsRef}>
+            <IngredientsList items={buns} title="Булки" />
+          </li>
+          <li ref={saucesRef}>
+            <IngredientsList items={sauces} title="Соусы" />
+          </li>
+          <li ref={mainRef}>
+            <IngredientsList items={main} title="Начинки" />
+          </li>
+        </ul>
+      </section>
+    </>
   );
 }
 

@@ -8,6 +8,7 @@ import {
   Modal,
   IngredientDetails,
   OrderDetails,
+  ProtectedRoute,
 } from "../";
 import {
   HomePage,
@@ -17,6 +18,7 @@ import {
   ForgotPasswordPage,
   ResetPasswordPage,
   ProfilePage,
+  IngredientPage,
 } from "../../pages";
 
 import useWindowSize from "../../hooks/useWindowSize";
@@ -32,6 +34,8 @@ function App() {
     (state) => state.ingredients
   );
 
+  const background = history.action === "PUSH";
+
   return (
     <>
       <Router history={history} basename="/">
@@ -44,9 +48,9 @@ function App() {
             <Route exact path="/feed">
               <FeedPage />
             </Route>
-            <Route exact path="/profile">
+            <ProtectedRoute path="/profile">
               <ProfilePage validation={validation} />
-            </Route>
+            </ProtectedRoute>
             <Route exact path="/login">
               <LoginPage validation={validation} />
             </Route>
@@ -59,17 +63,24 @@ function App() {
             <Route exact path="/reset-password">
               <ResetPasswordPage validation={validation} />
             </Route>
+            {background && (
+              <Route path="/ingredients/:id">
+                {ingredientModalOpen && (
+                  <Modal>
+                    <IngredientDetails />
+                  </Modal>
+                )}
+              </Route>
+            )}
+            <Route path="/ingredients/:id" exact>
+              <IngredientPage />
+            </Route>
             <Route>
               <Redirect to={"/"} />
             </Route>
           </Switch>
         </main>
       </Router>
-      {ingredientModalOpen && (
-        <Modal>
-          <IngredientDetails />
-        </Modal>
-      )}
       {orderModalOpen && (
         <Modal>
           <OrderDetails />

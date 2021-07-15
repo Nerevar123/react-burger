@@ -5,28 +5,24 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
-  RESET_PASSWORD_REQUEST,
+  LOGOUT_SUCCESS,
+  FORGOT_PASSWORD_SUCCESS,
   RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_FAILED,
-  SET_PASSWORD_REQUEST,
-  SET_PASSWORD_SUCCESS,
-  SET_PASSWORD_FAILED,
+  SET_USER,
 } from "../actions/user";
 
 const initialState = {
   user: {},
   accessToken: null,
   refreshToken: null,
-  isUserLoaded: false,
+  isLoggedIn: false,
 
   registerRequest: false,
   registerFailed: false,
   loginRequest: false,
   loginFailed: false,
-  resetPasswordRequest: false,
-  resetPasswordFailed: false,
-  setPasswordRequest: false,
-  setPasswordFailed: false,
+  forgotPasswordSuccess: false,
+  resetPasswordSuccess: false,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -45,6 +41,7 @@ export const userReducer = (state = initialState, action) => {
         refreshToken: action.refreshToken,
         registerFailed: false,
         registerRequest: false,
+        isLoggedIn: true,
       };
     }
     case REGISTER_FAILED: {
@@ -64,46 +61,35 @@ export const userReducer = (state = initialState, action) => {
         refreshToken: action.refreshToken,
         loginFailed: false,
         loginRequest: false,
+        isLoggedIn: true,
       };
     }
     case LOGIN_FAILED: {
       return { ...state, loginFailed: true, loginRequest: false };
     }
-    case RESET_PASSWORD_REQUEST: {
+    case LOGOUT_SUCCESS: {
+      return { ...state, isLoggedIn: false };
+    }
+    case FORGOT_PASSWORD_SUCCESS: {
       return {
         ...state,
-        resetPasswordRequest: true,
+        forgotPasswordSuccess: true,
       };
     }
     case RESET_PASSWORD_SUCCESS: {
       return {
         ...state,
-        resetPasswordFailed: false,
-        resetPasswordRequest: false,
+        resetPasswordSuccess: true,
       };
     }
-    case RESET_PASSWORD_FAILED: {
+    case SET_USER: {
       return {
         ...state,
-        resetPasswordFailed: true,
-        resetPasswordRequest: false,
+        user: action.user,
+        accessToken: action.accessToken,
+        refreshToken: action.refreshToken,
+        isLoggedIn: true,
       };
-    }
-    case SET_PASSWORD_REQUEST: {
-      return {
-        ...state,
-        setPasswordRequest: true,
-      };
-    }
-    case SET_PASSWORD_SUCCESS: {
-      return {
-        ...state,
-        setPasswordFailed: false,
-        setPasswordRequest: false,
-      };
-    }
-    case SET_PASSWORD_FAILED: {
-      return { ...state, setPasswordFailed: true, setPasswordRequest: false };
     }
     default: {
       return state;

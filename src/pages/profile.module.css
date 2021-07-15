@@ -3,8 +3,12 @@
   grid-template-columns: 320px 1fr;
   justify-content: center;
   gap: 60px;
-  max-width: 860px;
-  margin-top: 120px;
+  composes: mt-10 from global;
+}
+
+.form {
+  margin-top: 80px;
+  max-width: 480px;
 }
 
 .input {

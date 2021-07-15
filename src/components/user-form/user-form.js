@@ -1,9 +1,10 @@
+import cn from "classnames";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import userFormStyles from "./user-form.module.css";
 
-function UserForm({ children, buttonText, onSubmit }) {
+function UserForm({ children, buttonText, onSubmit, className }) {
   return (
-    <form className={userFormStyles.form}>
+    <form className={cn(userFormStyles.form, { [className]: className })}>
       <fieldset className={userFormStyles.fieldset}>{children}</fieldset>
       <div className="mt-6 mb-20">
         {buttonText && (

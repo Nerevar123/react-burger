@@ -1,16 +1,18 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UserSection, UserForm } from "../components";
-import { setPassword } from "../services/actions/user";
+import { resetPassword } from "../services/actions/user";
 import styles from "./home.module.css";
 
 function ResetPasswordPage({ validation }) {
+  const history = useHistory();
   const dispatch = useDispatch();
+  const { resetPasswordSuccess } = useSelector((state) => state.user);
   const { values, errors, handleChange, resetForm } = validation;
 
   useEffect(() => {
@@ -20,11 +22,17 @@ function ResetPasswordPage({ validation }) {
     };
   }, [resetForm]);
 
+  useEffect(() => {
+    if (resetPasswordSuccess) {
+      history.push("/login");
+    }
+  }, [history, resetPasswordSuccess]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      setPassword({
-        email: values.email,
+      resetPassword({
+        password: values.password,
         token: values.token,
       })
     );

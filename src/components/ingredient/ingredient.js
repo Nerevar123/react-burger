@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, memo } from "react";
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   CurrencyIcon,
   Counter,
@@ -10,6 +11,7 @@ import { OPEN_INGREDIENT_MODAL } from "../../services/actions/ingredients";
 import ingredientStyles from "./ingredient.module.css";
 
 const Ingredient = memo(function Ingredient({ item }) {
+  const history = useHistory();
   const [counter, setCounter] = useState(null);
   const { ordered, bun } = useSelector((state) => state.ingredients);
   const dispatch = useDispatch();
@@ -35,7 +37,8 @@ const Ingredient = memo(function Ingredient({ item }) {
       type: OPEN_INGREDIENT_MODAL,
       item: item,
     });
-  }, [dispatch, item]);
+    history.push({ pathname: `/ingredients/${item._id}` });
+  }, [dispatch, history, item]);
 
   return (
     <article

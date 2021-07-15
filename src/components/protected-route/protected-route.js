@@ -1,16 +1,18 @@
-import { useAuth } from "../services/auth";
+// import { useAuth } from "../services/auth";
 import { Redirect, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../services/actions/user";
 
 export function ProtectedRoute({ children, ...rest }) {
-  let { getUser, ...auth } = useAuth();
-  const [isUserLoaded, setUserLoaded] = useState(false);
+  const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   useEffect(() => {
-    getUser().then(() => setUserLoaded(true));
-  }, [getUser]);
+    dispatch(getUser());
+  }, [dispatch]);
 
-  if (!isUserLoaded) {
+  if (!isLoggedIn) {
     return null;
   }
 
@@ -18,7 +20,7 @@ export function ProtectedRoute({ children, ...rest }) {
     <Route
       {...rest}
       render={({ location }) =>
-        auth.user ? (
+        isLoggedIn ? (
           children
         ) : (
           <Redirect

@@ -18,6 +18,10 @@ import Stats from "./stats/stats";
 import UserForm from "./user-form/user-form";
 import UserSection from "./user-section/user-section";
 import ProfileNav from "./profile-nav/profile-nav";
+import ProfileOrders from "./profile-orders/profile-orders";
+import OrderCard from "./order-card/order-card";
+import Order from "./order/order";
+import { ProtectedRoute } from "./protected-route/protected-route";
 
 export {
   AppHeader,
@@ -40,4 +44,8 @@ export {
   UserForm,
   UserSection,
   ProfileNav,
+  ProfileOrders,
+  OrderCard,
+  Order,
+  ProtectedRoute,
 };

@@ -1,4 +1,4 @@
-import { baseUrl, checkError, headers } from "./utils";
+import { baseUrl, checkError, headers, getCookie } from "./utils";
 
 export const getIngredientsRequest = () => {
   return fetch(`${baseUrl}/ingredients`, {
@@ -34,38 +34,39 @@ export const logoutRequest = (data) => {
   return fetch(`${baseUrl}/auth/logout`, {
     method: "POST",
     headers: headers,
-    credentials: "include",
     body: JSON.stringify(data),
   }).then(checkError);
 };
 
 export const getUserRequest = () => {
   return fetch(`${baseUrl}/auth/user`, {
-    headers: headers,
-    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: getCookie("token"),
+    },
   }).then(checkError);
 };
 
 export const putUserRequest = (data) => {
   return fetch(`${baseUrl}/auth/user`, {
     method: "PUT",
-    headers: headers,
-    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: getCookie("token"),
+    },
     body: JSON.stringify(data),
   }).then(checkError);
 };
-
 
 export const tokenRequest = (data) => {
   return fetch(`${baseUrl}/auth/token`, {
     method: "POST",
     headers: headers,
-    credentials: "include",
     body: JSON.stringify(data),
   }).then(checkError);
 };
 
-export const resetPasswordRequest = (data) => {
+export const forgotPasswordRequest = (data) => {
   return fetch(`${baseUrl}/password-reset`, {
     method: "POST",
     headers: headers,
@@ -73,7 +74,7 @@ export const resetPasswordRequest = (data) => {
   }).then(checkError);
 };
 
-export const setPasswordRequest = (data) => {
+export const resetPasswordRequest = (data) => {
   return fetch(`${baseUrl}/password-reset/reset`, {
     method: "POST",
     headers: headers,

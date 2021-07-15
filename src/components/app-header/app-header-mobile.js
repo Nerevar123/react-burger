@@ -42,7 +42,7 @@ function AppHeaderMobile() {
                 <NavItem
                   text="Личный кабинет"
                   icon={<ProfileIcon type="secondary" />}
-                  to="/me"
+                  to="/profile"
                   onClick={toggleMenu}
                 />
               </li>
@@ -50,6 +50,7 @@ function AppHeaderMobile() {
                 <NavItem
                   text="Конструктор бургеров"
                   icon={<BurgerIcon type="primary" />}
+                  exact
                   to="/"
                   onClick={toggleMenu}
                 />
@@ -58,7 +59,7 @@ function AppHeaderMobile() {
                 <NavItem
                   text="Лента заказов"
                   icon={<ListIcon type="secondary" />}
-                  to="/orders"
+                  to="/feed"
                   onClick={toggleMenu}
                 />
               </li>

@@ -1,9 +1,14 @@
 import {
   registerRequest,
   loginRequest,
+  logoutRequest,
+  forgotPasswordRequest,
   resetPasswordRequest,
-  setPasswordRequest,
+  getUserRequest,
+  putUserRequest,
+  tokenRequest,
 } from "../../utils/api";
+import { setCookie, getCookie } from "../../utils/utils";
 
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
@@ -12,14 +17,12 @@ export const REGISTER_FAILED = "REGISTER_FAILED";
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILED = "LOGIN_FAILED";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 
-export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
+export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
 export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
-export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
 
-export const SET_PASSWORD_REQUEST = "SET_PASSWORD_REQUEST";
-export const SET_PASSWORD_SUCCESS = "SET_PASSWORD_SUCCESS";
-export const SET_PASSWORD_FAILED = "SET_PASSWORD_FAILED";
+export const SET_USER = "SET_USER";
 
 export function register(data) {
   return function (dispatch) {
@@ -34,6 +37,8 @@ export function register(data) {
           accessToken,
           refreshToken,
         });
+        setCookie("token", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
       })
       .catch((err) => {
         console.error(err);
@@ -57,6 +62,8 @@ export function login(data) {
           accessToken,
           refreshToken,
         });
+        setCookie("token", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
       })
       .catch((err) => {
         console.error(err);
@@ -67,11 +74,40 @@ export function login(data) {
   };
 }
 
+export function logout() {
+  return function (dispatch) {
+    const refreshToken = localStorage.getItem("refreshToken");
+    logoutRequest({ token: refreshToken })
+      .then(({ message }) => {
+        console.log(message);
+        dispatch({
+          type: LOGOUT_SUCCESS,
+        });
+        localStorage.removeItem("refreshToken");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+}
+
+export function forgotPassword(data) {
+  return function (dispatch) {
+    forgotPasswordRequest(data)
+      .then(({ message }) => {
+        console.log(message);
+        dispatch({
+          type: FORGOT_PASSWORD_SUCCESS,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+}
+
 export function resetPassword(data) {
   return function (dispatch) {
-    dispatch({
-      type: RESET_PASSWORD_REQUEST,
-    });
     resetPasswordRequest(data)
       .then(({ message }) => {
         console.log(message);
@@ -81,30 +117,61 @@ export function resetPassword(data) {
       })
       .catch((err) => {
         console.error(err);
-        dispatch({
-          type: RESET_PASSWORD_FAILED,
-        });
       });
   };
 }
 
-export function setPassword(data) {
+export function getUser() {
   return function (dispatch) {
-    dispatch({
-      type: SET_PASSWORD_REQUEST,
-    });
-    setPasswordRequest(data)
-      .then(({ message }) => {
-        console.log(message);
+    getUserRequest()
+      .then(({ user }) => {
+        const refreshToken = localStorage.getItem("refreshToken");
+        const accessToken = getCookie("token");
         dispatch({
-          type: SET_PASSWORD_SUCCESS,
+          type: SET_USER,
+          user,
+          accessToken,
+          refreshToken,
         });
       })
       .catch((err) => {
-        console.error(err);
-        dispatch({
-          type: SET_PASSWORD_FAILED,
-        });
+        if (err === "jwt expired") {
+          dispatch(refreshToken(getUser()));
+        } else {
+          console.error(err);
+        }
       });
   };
 }
+
+export function putUser(data) {
+  return function (dispatch) {
+    putUserRequest(data)
+      .then(({ user }) => {
+        dispatch({
+          type: SET_USER,
+          user,
+        });
+      })
+      .catch((err) => {
+        if (err === "jwt expired") {
+          dispatch(refreshToken(getUser()));
+        } else {
+          console.error(err);
+        }
+      });
+  };
+}
+
+const refreshToken = (afterRefresh) => {
+  return function (dispatch) {
+    const refreshToken = localStorage.getItem("refreshToken");
+    tokenRequest({ token: refreshToken }).then(
+      ({ accessToken, refreshToken }) => {
+        setCookie("token", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        dispatch(afterRefresh);
+      }
+    );
+  };
+};
