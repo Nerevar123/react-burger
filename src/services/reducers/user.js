@@ -18,8 +18,10 @@ const initialState = {
   isLoggedIn: false,
 
   registerRequest: false,
+  registerSuccess: false,
   registerFailed: false,
   loginRequest: false,
+  loginSuccess: false,
   loginFailed: false,
   forgotPasswordSuccess: false,
   resetPasswordSuccess: false,
@@ -42,6 +44,7 @@ export const userReducer = (state = initialState, action) => {
         registerFailed: false,
         registerRequest: false,
         isLoggedIn: true,
+        registerSuccess: true,
       };
     }
     case REGISTER_FAILED: {
@@ -61,6 +64,7 @@ export const userReducer = (state = initialState, action) => {
         refreshToken: action.refreshToken,
         loginFailed: false,
         loginRequest: false,
+        loginSuccess: true,
         isLoggedIn: true,
       };
     }

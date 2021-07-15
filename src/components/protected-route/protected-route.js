@@ -12,10 +12,6 @@ export function ProtectedRoute({ children, ...rest }) {
     dispatch(getUser());
   }, [dispatch]);
 
-  if (!isLoggedIn) {
-    return null;
-  }
-
   return (
     <Route
       {...rest}

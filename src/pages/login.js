@@ -6,13 +6,13 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UserSection, UserForm } from "../components";
-import { login } from "../services/actions/user";
+import { login, getUser } from "../services/actions/user";
 import styles from "./home.module.css";
 
 function Login({ validation }) {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const { isLoggedIn, loginSuccess } = useSelector((state) => state.user);
   const { values, errors, handleChange, resetForm } = validation;
 
   useEffect(() => {
@@ -23,10 +23,14 @@ function Login({ validation }) {
   }, [resetForm]);
 
   useEffect(() => {
-    if (isLoggedIn) {
+    dispatch(getUser());
+    if (loginSuccess) {
       history.push("/profile");
     }
-  }, [history, isLoggedIn]);
+    if (isLoggedIn) {
+      history.push("/");
+    }
+  }, [dispatch, history, isLoggedIn, loginSuccess]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -3,13 +3,15 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UserSection, UserForm } from "../components";
-import { forgotPassword } from "../services/actions/user";
+import { forgotPassword, getUser } from "../services/actions/user";
 import styles from "./home.module.css";
 
 function ForgotPasswordPage({ validation }) {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { forgotPasswordSuccess } = useSelector((state) => state.user);
+  const { forgotPasswordSuccess, isLoggedIn } = useSelector(
+    (state) => state.user
+  );
   const { values, errors, handleChange, resetForm } = validation;
 
   useEffect(() => {
@@ -20,10 +22,14 @@ function ForgotPasswordPage({ validation }) {
   }, [resetForm]);
 
   useEffect(() => {
+    dispatch(getUser());
     if (forgotPasswordSuccess) {
       history.push("/reset-password");
     }
-  }, [forgotPasswordSuccess, history]);
+    if (isLoggedIn) {
+      history.push("/");
+    }
+  }, [dispatch, forgotPasswordSuccess, history, isLoggedIn]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -6,13 +6,14 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UserSection, UserForm } from "../components";
-import { resetPassword } from "../services/actions/user";
+import { resetPassword, getUser } from "../services/actions/user";
 import styles from "./home.module.css";
 
 function ResetPasswordPage({ validation }) {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { resetPasswordSuccess } = useSelector((state) => state.user);
+  const { resetPasswordSuccess, isLoggedIn, forgotPasswordSuccess } =
+    useSelector((state) => state.user);
   const { values, errors, handleChange, resetForm } = validation;
 
   useEffect(() => {
@@ -23,10 +24,20 @@ function ResetPasswordPage({ validation }) {
   }, [resetForm]);
 
   useEffect(() => {
-    if (resetPasswordSuccess) {
+    dispatch(getUser());
+    if (resetPasswordSuccess || !forgotPasswordSuccess) {
       history.push("/login");
     }
-  }, [history, resetPasswordSuccess]);
+    if (isLoggedIn) {
+      history.push("/");
+    }
+  }, [
+    dispatch,
+    forgotPasswordSuccess,
+    history,
+    isLoggedIn,
+    resetPasswordSuccess,
+  ]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
