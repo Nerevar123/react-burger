@@ -137,6 +137,7 @@ export function getUser() {
       })
       .catch((err) => {
         if (err === "jwt expired") {
+          console.log(err);
           dispatch(refreshToken(getUser()));
         } else {
           console.error(err);
@@ -159,6 +160,7 @@ export function putUser(data) {
       })
       .catch((err) => {
         if (err === "jwt expired") {
+          console.log(err);
           dispatch(refreshToken(getUser()));
         } else {
           console.error(err);
@@ -170,12 +172,14 @@ export function putUser(data) {
 const refreshToken = (afterRefresh) => {
   return function (dispatch) {
     const refreshToken = localStorage.getItem("refreshToken");
-    tokenRequest({ token: refreshToken }).then(
-      ({ accessToken, refreshToken }) => {
+    tokenRequest({ token: refreshToken })
+      .then(({ accessToken, refreshToken }) => {
         setCookie("token", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
         dispatch(afterRefresh);
-      }
-    );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 };

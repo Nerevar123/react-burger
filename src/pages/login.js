@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Input,
@@ -11,6 +11,7 @@ import styles from "./home.module.css";
 
 function Login({ validation }) {
   const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
   const { isLoggedIn, loginSuccess } = useSelector((state) => state.user);
   const { values, errors, handleChange, resetForm } = validation;
@@ -23,14 +24,13 @@ function Login({ validation }) {
   }, [resetForm]);
 
   useEffect(() => {
-    dispatch(getUser());
     if (loginSuccess) {
-      history.push("/profile");
-    }
-    if (isLoggedIn) {
+      history.push(location.state?.from || "/profile");
+    } else if (isLoggedIn) {
       history.push("/");
     }
-  }, [dispatch, history, isLoggedIn, loginSuccess]);
+    dispatch(getUser());
+  }, [dispatch, history, isLoggedIn, location.state?.from, loginSuccess]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

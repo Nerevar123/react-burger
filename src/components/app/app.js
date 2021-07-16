@@ -42,13 +42,15 @@ function App() {
     (state) => state.ingredients
   );
 
-  // const background = history.action === "PUSH";
-  const background = location.state && location.state.background;
-  // console.log(background)
+  let background = location.state && location.state.background;
 
   useEffect(() => {
-    console.log("122312")
     dispatch(getIngredients());
+  }, [dispatch]);
+
+  useEffect(() => {
+    history.replace();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -78,23 +80,23 @@ function App() {
             <Route exact path="/reset-password">
               <ResetPasswordPage validation={validation} />
             </Route>
-            <Route path="/ingredients/:id" exact>
+            <Route path="/ingredients/:id">
               <IngredientPage />
             </Route>
             <Route>
               <Redirect to={"/"} />
             </Route>
           </Switch>
+          {background && (
+            <Route path="/ingredients/:id">
+              {ingredientModalOpen && (
+                <Modal>
+                  <IngredientDetails />
+                </Modal>
+              )}
+            </Route>
+          )}
         </main>
-        {background && (
-          <Route path="/ingredients/:id">
-            {ingredientModalOpen && (
-              <Modal>
-                <IngredientDetails />
-              </Modal>
-            )}
-          </Route>
-        )}
       </Router>
       {orderModalOpen && (
         <Modal>

@@ -12,3 +12,7 @@
   margin: 0;
   width: 100%;
 }
+
+.buttons {
+  align-self: flex-end;
+}

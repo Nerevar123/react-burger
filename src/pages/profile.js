@@ -1,15 +1,18 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Route, useRouteMatch, useHistory } from "react-router-dom";
 import {
   EmailInput,
+  PasswordInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UserForm, ProfileNav, ProfileOrders, Order } from "../components";
+import { putUser } from "../services/actions/user";
 import styles from "./profile.module.css";
 
 function ProfilePage({ validation }) {
   const history = useHistory();
+  const dispatch = useDispatch();
   const { path } = useRouteMatch();
   const { values, errors, handleChange, resetForm } = validation;
   const { user, isLoggedIn } = useSelector((state) => state.user);
@@ -27,12 +30,33 @@ function ProfilePage({ validation }) {
     }
   }, [history, isLoggedIn]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      putUser({
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      })
+    );
+  };
+
+  const handleReset = (e) => {
+    e.preventDefault();
+    resetForm(user);
+  };
+
   return (
     <>
       <Route exact path={path}>
         <section className={styles.grid}>
           <ProfileNav />
-          <UserForm className={styles.form}>
+          <UserForm
+            className={styles.form}
+            buttonsText={["Сохранить", "Отмена"]}
+            onSubmit={handleSubmit}
+            onReset={handleReset}
+          >
             <div className={styles.input}>
               <Input
                 onChange={handleChange}
@@ -45,17 +69,17 @@ function ProfilePage({ validation }) {
               />
             </div>
             <div className={`${styles.input} mt-6`}>
-              <EmailInput onChange={handleChange} value={values.email || ""} />
+              <EmailInput
+                onChange={handleChange}
+                value={values.email || ""}
+                name={"email"}
+              />
             </div>
             <div className={`${styles.input} mt-6`}>
-              <Input
+              <PasswordInput
                 onChange={handleChange}
                 value={values.password || ""}
                 name={"password"}
-                placeholder="Пароль"
-                error={!!errors.password}
-                errorText={errors.password}
-                icon={"EditIcon"}
               />
             </div>
           </UserForm>

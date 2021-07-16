@@ -1,20 +1,13 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import cn from "classnames";
-import { getIngredients } from "../../services/actions/ingredients";
 import ingredientDetailsStyles from "./ingredient-details.module.css";
 
 function IngredientDetails() {
   const { buns, sauces, main, currentModalItem } = useSelector(
     (state) => state.ingredients
   );
-  const dispatch = useDispatch();
   let { id } = useParams();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
 
   const item =
     currentModalItem ||
