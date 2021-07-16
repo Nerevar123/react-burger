@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, memo } from "react";
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   CurrencyIcon,
   Counter,
@@ -15,6 +15,7 @@ const Ingredient = memo(function Ingredient({ item }) {
   const [counter, setCounter] = useState(null);
   const { ordered, bun } = useSelector((state) => state.ingredients);
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     if (item.type === "bun") {
@@ -37,8 +38,11 @@ const Ingredient = memo(function Ingredient({ item }) {
       type: OPEN_INGREDIENT_MODAL,
       item: item,
     });
-    history.push({ pathname: `/ingredients/${item._id}` });
-  }, [dispatch, history, item]);
+    history.replace({
+      pathname: `/ingredients/${item._id}`,
+      state: { background: location },
+    });
+  }, [dispatch, history, item, location]);
 
   return (
     <article

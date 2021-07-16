@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import cn from "classnames";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientsList } from "../";
-import { getIngredients } from "../../services/actions/ingredients";
+
 import useScroll from "../../hooks/useScroll";
 import ingredientsStyles from "./burger-ingredients.module.css";
 
@@ -13,12 +13,7 @@ function BurgerIngredients() {
   const [saucesRef, isSaucesVisible] = useScroll();
   const [mainRef, isMainVisible] = useScroll();
 
-  const dispatch = useDispatch();
   const { buns, sauces, main } = useSelector((state) => state.ingredients);
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
 
   useEffect(() => {
     isBunsVisible

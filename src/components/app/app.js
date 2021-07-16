@@ -1,7 +1,13 @@
-import { Router, Route, Switch, useHistory, Redirect } from "react-router-dom";
-
-import { useSelector } from "react-redux";
-
+import { useEffect } from "react";
+import {
+  Router,
+  Route,
+  Switch,
+  useHistory,
+  Redirect,
+  useLocation,
+} from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import {
   AppHeader,
   AppHeaderMobile,
@@ -20,13 +26,15 @@ import {
   ProfilePage,
   IngredientPage,
 } from "../../pages";
-
+import { getIngredients } from "../../services/actions/ingredients";
 import useWindowSize from "../../hooks/useWindowSize";
 import useValidation from "../../hooks/useValidation";
 import appStyles from "./app.module.css";
 
 function App() {
   const history = useHistory();
+  const location = useLocation();
+  const dispatch = useDispatch();
   const size = useWindowSize();
   const validation = useValidation();
 
@@ -34,14 +42,21 @@ function App() {
     (state) => state.ingredients
   );
 
-  const background = history.action === "PUSH";
+  // const background = history.action === "PUSH";
+  const background = location.state && location.state.background;
+  // console.log(background)
+
+  useEffect(() => {
+    console.log("122312")
+    dispatch(getIngredients());
+  }, []);
 
   return (
     <>
       <Router history={history} basename="/">
         {size.width > 750 ? <AppHeader /> : <AppHeaderMobile />}
         <main className={appStyles.main}>
-          <Switch>
+          <Switch location={background || location}>
             <Route exact path="/">
               <HomePage />
             </Route>
@@ -63,15 +78,6 @@ function App() {
             <Route exact path="/reset-password">
               <ResetPasswordPage validation={validation} />
             </Route>
-            {background && (
-              <Route path="/ingredients/:id">
-                {ingredientModalOpen && (
-                  <Modal>
-                    <IngredientDetails />
-                  </Modal>
-                )}
-              </Route>
-            )}
             <Route path="/ingredients/:id" exact>
               <IngredientPage />
             </Route>
@@ -80,6 +86,15 @@ function App() {
             </Route>
           </Switch>
         </main>
+        {background && (
+          <Route path="/ingredients/:id">
+            {ingredientModalOpen && (
+              <Modal>
+                <IngredientDetails />
+              </Modal>
+            )}
+          </Route>
+        )}
       </Router>
       {orderModalOpen && (
         <Modal>
