@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { useHistory } from "react-router-dom";
 import cn from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
@@ -6,8 +7,7 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import ConstructorItem from "../constructor-item/constructor-item";
-import ConstructorBunItem from "../constructor-bun-item/constructor-bun-item";
+import { ConstructorItem, ConstructorBunItem } from "../";
 import { postOrder } from "../../services/actions/ingredients";
 import useWindowSize from "../../hooks/useWindowSize";
 import {
@@ -20,14 +20,20 @@ import constructorStyles from "./burger-constructor.module.css";
 function BurgerConstructor() {
   const size = useWindowSize();
   const dispatch = useDispatch();
+  const history = useHistory();
   const { bun, ordered, finalPrice } = useSelector(
     (state) => state.ingredients
   );
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   const handleConfirmClick = useCallback(() => {
-    const orderItems = ordered.map((item) => item._id);
-    dispatch(postOrder({ ingredients: [...orderItems, bun._id] }));
-  }, [bun._id, dispatch, ordered]);
+    if (!isLoggedIn) {
+      history.push("/login");
+    } else {
+      const orderItems = ordered.map((item) => item._id);
+      dispatch(postOrder({ ingredients: [...orderItems, bun._id] }));
+    }
+  }, [bun._id, dispatch, history, isLoggedIn, ordered]);
 
   const moveItem = useCallback(
     (item) => {

@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import DoneAnimation from "../done-animation/done-animation";
+import { DoneAnimation } from "../";
 import orderDetailsStyles from "./order-details.module.css";
 
 function OrderDetails() {

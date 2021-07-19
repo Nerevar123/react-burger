@@ -24,7 +24,7 @@ const initialState = {
   bun: {},
   finalPrice: null,
 
-  currentModalItem: [],
+  currentModalItem: null,
   orderNumber: null,
   orderModalOpen: false,
   ingredientModalOpen: false,

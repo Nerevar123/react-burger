@@ -5,7 +5,7 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import useWindowSize from "../../hooks/useWindowSize";
-import NavItem from "../nav-item/nav-item";
+import { NavItem } from "../";
 import logoMobile from "../../images/logo-mobile.svg";
 import headerStyles from "./app-header.module.css";
 
@@ -21,11 +21,12 @@ function AppHeader() {
                 text="Конструктор"
                 icon={<BurgerIcon type="primary" />}
                 to="/"
+                exact
               />
               <NavItem
                 text="Лента заказов"
                 icon={<ListIcon type="secondary" />}
-                to="/orders"
+                to="/feed"
               />
             </div>
           </li>
@@ -40,7 +41,7 @@ function AppHeader() {
             <NavItem
               text="Личный кабинет"
               icon={<ProfileIcon type="secondary" />}
-              to="/me"
+              to="/profile"
             />
           </li>
         </ul>

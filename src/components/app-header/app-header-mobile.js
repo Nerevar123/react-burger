@@ -9,7 +9,7 @@ import {
   CloseIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { TOGGLE_MENU } from "../../services/actions/header";
-import NavItem from "../nav-item/nav-item";
+import { NavItem } from "../";
 import logoMobile from "../../images/logo-mobile.svg";
 import headerStyles from "./app-header.module.css";
 
@@ -42,7 +42,7 @@ function AppHeaderMobile() {
                 <NavItem
                   text="Личный кабинет"
                   icon={<ProfileIcon type="secondary" />}
-                  to="/me"
+                  to="/profile"
                   onClick={toggleMenu}
                 />
               </li>
@@ -50,6 +50,7 @@ function AppHeaderMobile() {
                 <NavItem
                   text="Конструктор бургеров"
                   icon={<BurgerIcon type="primary" />}
+                  exact
                   to="/"
                   onClick={toggleMenu}
                 />
@@ -58,7 +59,7 @@ function AppHeaderMobile() {
                 <NavItem
                   text="Лента заказов"
                   icon={<ListIcon type="secondary" />}
-                  to="/orders"
+                  to="/feed"
                   onClick={toggleMenu}
                 />
               </li>
