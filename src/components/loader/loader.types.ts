@@ -6,7 +6,7 @@ export enum ESizes {
 
 export interface ILoaderProps {
   size: ESizes;
-  inverse: boolean;
+  inverse?: boolean;
 }
 
 export interface ILoaderSvgProps {

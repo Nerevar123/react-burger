@@ -4,7 +4,7 @@ import orderStyles from "./order.module.css";
 import data from "../../utils/orders.json";
 
 function Order() {
-  let { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const order = data.find((order) => order.id === id);
 
   return (
@@ -12,13 +12,13 @@ function Order() {
       <p
         className={`${orderStyles.number} text text_type_digits-default mb-10`}
       >
-        #{order.id}
+        #{order?.id}
       </p>
-      <h2 className="text text_type_main-medium mb-3">{order.name}</h2>
+      <h2 className="text text_type_main-medium mb-3">{order?.name}</h2>
       <p className="text text_type_main-default mb-15">Создан</p>
       <p className="text text_type_main-medium mb-6">Состав:</p>
       <ul className={`${orderStyles.itemsList} pr-6`}>
-        {order.ingredients.map((item) => (
+        {order?.ingredients.map((item) => (
           <li className={orderStyles.item} key={item._id}>
             <div className={`${orderStyles.pict} mr-4`}>
               <img

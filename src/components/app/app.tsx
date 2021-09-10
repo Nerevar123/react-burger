@@ -26,14 +26,16 @@ import {
   ProfilePage,
   IngredientPage,
 } from "../../pages";
-import { getIngredients } from "../../services/actions/ingredients";
+import { getIngredientsThunk } from "../../services/actions/ingredients";
 import useWindowSize from "../../hooks/useWindowSize";
 import useValidation from "../../hooks/useValidation";
 import appStyles from "./app.module.css";
 
 function App() {
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<{
+    background: undefined;
+  }>();
   const dispatch = useDispatch();
   const size = useWindowSize();
   const validation = useValidation();
@@ -45,17 +47,19 @@ function App() {
   let background = location.state && location.state.background;
 
   useEffect(() => {
-    dispatch(getIngredients());
+    dispatch(getIngredientsThunk());
   }, [dispatch]);
 
   useEffect(() => {
-    history.replace();
+    history.replace({
+      state: { background: undefined },
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      <Router history={history} basename="/">
+      <Router history={history}>
         {size.width > 750 ? <AppHeader /> : <AppHeaderMobile />}
         <main className={appStyles.main}>
           <Switch location={background || location}>

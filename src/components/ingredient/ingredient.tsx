@@ -1,29 +1,29 @@
 import { useState, useEffect, useCallback, memo } from "react";
-import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
-import { useDispatch, useSelector } from "../../services/hooks";
 import { useHistory, useLocation } from "react-router-dom";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { OPEN_INGREDIENT_MODAL } from "../../services/actions/ingredients";
+import { useDispatch, useSelector } from "../../services/hooks";
+import { openIngredientAction } from "../../services/actions/ingredients";
 import ingredientStyles from "./ingredient.module.css";
+import { IIngredientProps } from "./ingredient.types";
 
-const Ingredient = memo(function Ingredient({ item }) {
+const Ingredient = memo(function Ingredient({ item }: IIngredientProps) {
   const history = useHistory();
-  const [counter, setCounter] = useState(null);
+  const [counter, setCounter] = useState<number | null>(null);
   const { ordered, bun } = useSelector((state) => state.ingredients);
   const dispatch = useDispatch();
   const location = useLocation();
 
   useEffect(() => {
     if (item.type === "bun") {
-      setCounter(bun._id === item._id ? 1 : 0);
+      setCounter(bun?._id === item._id ? 1 : 0);
     } else {
       setCounter(ordered.filter((el) => el._id === item._id).length);
     }
-  }, [bun._id, item._id, item.type, ordered]);
+  }, [bun?._id, item._id, item.type, ordered]);
 
   const [{ opacity }, ref] = useDrag({
     type: "ingredients",
@@ -34,10 +34,7 @@ const Ingredient = memo(function Ingredient({ item }) {
   });
 
   const onItemClick = useCallback(() => {
-    dispatch({
-      type: OPEN_INGREDIENT_MODAL,
-      item: item,
-    });
+    dispatch(openIngredientAction(item));
     history.replace({
       pathname: `/ingredients/${item._id}`,
       state: { background: location },
@@ -65,17 +62,9 @@ const Ingredient = memo(function Ingredient({ item }) {
       >
         {item.name}
       </p>
-      {counter > 0 && <Counter count={counter} size="default" />}
+      {counter! > 0 && <Counter count={counter!} size="default" />}
     </article>
   );
 });
-
-Ingredient.propTypes = {
-  item: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-  }),
-};
 
 export default Ingredient;

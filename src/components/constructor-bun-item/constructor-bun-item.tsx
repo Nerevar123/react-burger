@@ -3,8 +3,14 @@ import cn from "classnames";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import bunIcon from "../../images/bun-icon.svg";
 import constructorBunItemStyles from "./constructor-bun-item.module.css";
+import { IConstructorBunItemProps } from "./constructor-bun-item.types";
 
-function ConstructorBunItem({ element, type, isTop, isBottom }) {
+function ConstructorBunItem({
+  element,
+  type,
+  isTop,
+  isBottom,
+}: IConstructorBunItemProps) {
   return (
     <div
       className={cn(
@@ -16,11 +22,11 @@ function ConstructorBunItem({ element, type, isTop, isBottom }) {
     >
       <div className={constructorBunItemStyles.wrapper}>
         <ConstructorElement
-          text={`${element.name || "Булка"} ${isTop ? "(верх)" : ""} ${
+          text={`${element?.name || "Булка"} ${isTop ? "(верх)" : ""} ${
             isBottom ? "(низ)" : ""
           }`}
-          price={element.price}
-          thumbnail={element.image || bunIcon}
+          price={element?.price}
+          thumbnail={element?.image || bunIcon}
           type={type}
           isLocked
         />

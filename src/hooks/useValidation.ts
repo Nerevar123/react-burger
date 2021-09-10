@@ -1,10 +1,10 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, ChangeEvent } from "react";
 
 function useValidation() {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
     const value = target.value;
     const name = target.name;

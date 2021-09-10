@@ -12,10 +12,10 @@ function useScroll() {
       });
     });
 
-    if (current) observer.observe(current);
+    if (current) observer.observe(current as unknown as Element);
 
     return () => {
-      if (current) observer.unobserve(current);
+      if (current) observer.unobserve(current as unknown as Element);
     };
   }, [current]);
 

@@ -1,24 +1,28 @@
 import { useCallback, useMemo } from "react";
-import PropTypes from "prop-types";
 import cn from "classnames";
 import { useDispatch } from "../../services/hooks";
-import { useDrag, useDrop } from "react-dnd";
+import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { REMOVE_INGREDIENT } from "../../services/actions/ingredients";
+import { removeIngredientAction } from "../../services/actions/ingredients";
 import constructorItemStyles from "./constructor-item.module.css";
+import { IConstructorItemProps } from "./constructor-item.types";
+import { IIngredient } from "../../types/ingredient";
 
-function ConstructorItem({ element, type, findCard, moveCard, id }) {
+function ConstructorItem({
+  element,
+  type,
+  findCard,
+  moveCard,
+  id,
+}: IConstructorItemProps) {
   const dispatch = useDispatch();
 
   const removeItem = useCallback(
     (item) => {
-      dispatch({
-        type: REMOVE_INGREDIENT,
-        item: item,
-      });
+      dispatch(removeIngredientAction(item));
     },
     [dispatch]
   );
@@ -49,10 +53,10 @@ function ConstructorItem({ element, type, findCard, moveCard, id }) {
     () => ({
       accept: "constructorItems",
       canDrop: () => false,
-      hover({ id: draggedId }) {
-        if (draggedId !== id) {
+      hover(item: IIngredient, monitor: DropTargetMonitor<unknown, unknown>) {
+        if (item.id !== id) {
           const { index: overIndex } = findCard(id);
-          moveCard(draggedId, overIndex);
+          moveCard(item.id!, overIndex);
         }
       },
     }),
@@ -82,21 +86,5 @@ function ConstructorItem({ element, type, findCard, moveCard, id }) {
     </li>
   );
 }
-
-ConstructorItem.propTypes = {
-  element: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_large: PropTypes.string,
-    calories: PropTypes.number,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-  }),
-  type: PropTypes.string,
-};
 
 export default ConstructorItem;

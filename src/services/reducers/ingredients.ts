@@ -104,7 +104,7 @@ export const ingredientsReducer = (
     case REMOVE_INGREDIENT: {
       return {
         ...state,
-        ordered: state.ordered.filter((item) => item._id !== action.item._id),
+        ordered: state.ordered.filter((item) => item.id !== action.item.id),
         finalPrice: state.finalPrice! - action.item.price,
       };
     }
@@ -118,7 +118,7 @@ export const ingredientsReducer = (
       };
     }
     case ADD_BUN: {
-      const oldPrice = state.bun!.price * 2 || 0;
+      const oldPrice = state.bun?.price! * 2 || 0;
       return {
         ...state,
         bun: action.item,

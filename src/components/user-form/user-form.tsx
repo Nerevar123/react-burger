@@ -12,7 +12,10 @@ function UserForm({
   className,
 }: IUserFormProps) {
   return (
-    <form className={cn(userFormStyles.form, { [className]: className })}>
+    <form
+      className={cn(userFormStyles.form, { [className]: className })}
+      onSubmit={onSubmit}
+    >
       <fieldset className={userFormStyles.fieldset}>{children}</fieldset>
       <div
         className={cn("mt-6 mb-20", { [userFormStyles.buttons]: buttonsText })}
@@ -22,12 +25,12 @@ function UserForm({
             <Button type="secondary" size="medium" onClick={onReset}>
               {buttonsText[1]}
             </Button>
-            <Button type="primary" size="medium" onClick={onSubmit}>
+            <Button type="primary" size="medium">
               {buttonsText[0]}
             </Button>
           </div>
         ) : (
-          <Button type="primary" size="medium" onClick={onSubmit}>
+          <Button type="primary" size="medium">
             {buttonText}
           </Button>
         )}

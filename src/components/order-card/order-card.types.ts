@@ -1,5 +1,4 @@
-import { TIngredients } from "../../types/ingredient";
-
+import { IOrder } from "../../types/order";
 export interface IOrderCardProps {
-  data: TIngredients;
+  data: IOrder;
 }

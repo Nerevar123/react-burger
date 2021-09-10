@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { FormEvent, useEffect } from "react";
+import { useDispatch, useSelector } from "../services/hooks";
 import { Route, useRouteMatch, useHistory } from "react-router-dom";
 import {
   EmailInput,
@@ -7,10 +7,11 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { UserForm, ProfileNav, ProfileOrders, Order } from "../components";
-import { putUser } from "../services/actions/user";
+import { putUserThunk } from "../services/actions/user";
 import styles from "./profile.module.css";
+import { IUserPageProps } from "./pages.types";
 
-function ProfilePage({ validation }) {
+function ProfilePage({ validation }: IUserPageProps) {
   const history = useHistory();
   const dispatch = useDispatch();
   const { path } = useRouteMatch();
@@ -30,10 +31,10 @@ function ProfilePage({ validation }) {
     }
   }, [history, isLoggedIn]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(
-      putUser({
+      putUserThunk({
         name: values.name,
         email: values.email,
         password: values.password,
@@ -41,8 +42,7 @@ function ProfilePage({ validation }) {
     );
   };
 
-  const handleReset = (e) => {
-    e.preventDefault();
+  const handleReset = () => {
     resetForm(user);
   };
 
@@ -57,31 +57,33 @@ function ProfilePage({ validation }) {
             onSubmit={handleSubmit}
             onReset={handleReset}
           >
-            <div className={styles.input}>
-              <Input
-                onChange={handleChange}
-                value={values.name || ""}
-                name={"name"}
-                placeholder="Имя"
-                error={!!errors.name}
-                errorText={errors.name}
-                icon={"EditIcon"}
-              />
-            </div>
-            <div className={`${styles.input} mt-6`}>
-              <EmailInput
-                onChange={handleChange}
-                value={values.email || ""}
-                name={"email"}
-              />
-            </div>
-            <div className={`${styles.input} mt-6`}>
-              <PasswordInput
-                onChange={handleChange}
-                value={values.password || ""}
-                name={"password"}
-              />
-            </div>
+            <>
+              <div className={styles.input}>
+                <Input
+                  onChange={handleChange}
+                  value={values.name || ""}
+                  name={"name"}
+                  placeholder="Имя"
+                  error={!!errors.name}
+                  errorText={errors.name}
+                  icon={"EditIcon"}
+                />
+              </div>
+              <div className={`${styles.input} mt-6`}>
+                <EmailInput
+                  onChange={handleChange}
+                  value={values.email || ""}
+                  name={"email"}
+                />
+              </div>
+              <div className={`${styles.input} mt-6`}>
+                <PasswordInput
+                  onChange={handleChange}
+                  value={values.password || ""}
+                  name={"password"}
+                />
+              </div>
+            </>
           </UserForm>
         </section>
       </Route>

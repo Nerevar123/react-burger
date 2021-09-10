@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import { useDispatch } from "../../services/hooks";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ModalOverlay } from "..";
-import { CLOSE_MODALS } from "../../services/actions/ingredients";
+import { closeModalsAction } from "../../services/actions/ingredients";
 import modalStyles from "./modal.module.css";
 import { IModalProps } from "./modal.types";
 
@@ -15,9 +15,7 @@ function Modal({ children }: IModalProps) {
   const history = useHistory();
 
   const handleClose = useCallback(() => {
-    dispatch({
-      type: CLOSE_MODALS,
-    });
+    dispatch(closeModalsAction());
     history.push("/");
   }, [dispatch, history]);
 

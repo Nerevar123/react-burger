@@ -1,13 +1,13 @@
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import cn from "classnames";
+import { useSelector } from "../../services/hooks";
 import ingredientDetailsStyles from "./ingredient-details.module.css";
 
 function IngredientDetails() {
   const { buns, sauces, main, currentModalItem } = useSelector(
     (state) => state.ingredients
   );
-  let { id } = useParams();
+  const { id } = useParams<{ id: string }>();
 
   const item =
     currentModalItem ||

@@ -8,7 +8,7 @@ import {
   // MenuIcon,
   CloseIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { TOGGLE_MENU } from "../../services/actions/header";
+import { toggleMenu } from "../../services/actions/header";
 import { NavItem } from "..";
 import logoMobile from "../../images/logo-mobile.svg";
 import headerStyles from "./app-header.module.css";
@@ -17,10 +17,8 @@ function AppHeaderMobile() {
   const mobileMenuOpen = useSelector((state) => state.header.mobileMenuOpen);
   const dispatch = useDispatch();
 
-  const toggleMenu = useCallback(() => {
-    dispatch({
-      type: TOGGLE_MENU,
-    });
+  const handleToggleMenu = useCallback(() => {
+    dispatch(toggleMenu());
   }, [dispatch]);
 
   return (
@@ -43,7 +41,7 @@ function AppHeaderMobile() {
                   text="Личный кабинет"
                   icon={<ProfileIcon type="secondary" />}
                   to="/profile"
-                  onClick={toggleMenu}
+                  onClick={handleToggleMenu}
                 />
               </li>
               <li className={headerStyles.navItem}>
@@ -52,7 +50,7 @@ function AppHeaderMobile() {
                   icon={<BurgerIcon type="primary" />}
                   exact
                   to="/"
-                  onClick={toggleMenu}
+                  onClick={handleToggleMenu}
                 />
               </li>
               <li className={headerStyles.navItem}>
@@ -60,14 +58,14 @@ function AppHeaderMobile() {
                   text="Лента заказов"
                   icon={<ListIcon type="secondary" />}
                   to="/feed"
-                  onClick={toggleMenu}
+                  onClick={handleToggleMenu}
                 />
               </li>
             </ul>
             <button
               className={headerStyles.closeButton}
               type="button"
-              onClick={toggleMenu}
+              onClick={handleToggleMenu}
             >
               <CloseIcon type="primary" />
             </button>
@@ -78,7 +76,7 @@ function AppHeaderMobile() {
             <button
               className={headerStyles.menuIcon}
               type="button"
-              onClick={toggleMenu}
+              onClick={handleToggleMenu}
             >
               {/* <MenuIcon type="primary" /> */}
             </button>

@@ -75,13 +75,13 @@ function BurgerIngredients() {
           </li>
         </ul>
         <ul className={ingredientsStyles.cards}>
-          <li ref={bunsRef}>
+          <li ref={bunsRef as React.MutableRefObject<null>}>
             <IngredientsList items={buns} title="Булки" />
           </li>
-          <li ref={saucesRef}>
+          <li ref={saucesRef as React.MutableRefObject<null>}>
             <IngredientsList items={sauces} title="Соусы" />
           </li>
-          <li ref={mainRef}>
+          <li ref={mainRef as React.MutableRefObject<null>}>
             <IngredientsList items={main} title="Начинки" />
           </li>
         </ul>

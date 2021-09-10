@@ -8,12 +8,12 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ConstructorItem, ConstructorBunItem } from "..";
-import { postOrder } from "../../services/actions/ingredients";
+import { postOrderThunk } from "../../services/actions/ingredients";
 import useWindowSize from "../../hooks/useWindowSize";
 import {
-  ADD_INGREDIENT,
-  ADD_BUN,
-  MOVE_INGREDIENT,
+  addIngredientAction,
+  addBunAction,
+  moveIngredientAction,
 } from "../../services/actions/ingredients";
 import constructorStyles from "./burger-constructor.module.css";
 
@@ -31,21 +31,15 @@ function BurgerConstructor() {
       history.push("/login");
     } else {
       const orderItems = ordered.map((item) => item._id);
-      dispatch(postOrder({ ingredients: [...orderItems, bun._id] }));
+      dispatch(postOrderThunk({ ingredients: [...orderItems, bun?._id] }));
     }
-  }, [bun._id, dispatch, history, isLoggedIn, ordered]);
+  }, [bun?._id, dispatch, history, isLoggedIn, ordered]);
 
   const moveItem = useCallback(
     (item) => {
       item.type === "bun"
-        ? dispatch({
-            type: ADD_BUN,
-            item: item,
-          })
-        : dispatch({
-            type: ADD_INGREDIENT,
-            item: item,
-          });
+        ? dispatch(addBunAction(item))
+        : dispatch(addIngredientAction(item));
     },
     [dispatch]
   );
@@ -64,11 +58,7 @@ function BurgerConstructor() {
   const moveCard = useCallback(
     (id, atIndex) => {
       const { index } = findCard(id);
-      dispatch({
-        type: MOVE_INGREDIENT,
-        index: index,
-        atIndex: atIndex,
-      });
+      dispatch(moveIngredientAction(index, atIndex));
     },
     [findCard, dispatch]
   );
@@ -90,25 +80,28 @@ function BurgerConstructor() {
       className={`${constructorStyles.section} mt-25 pl-4`}
       ref={dropTarget}
     >
-      <ConstructorBunItem element={bun} type="top" isTop />
+      <ConstructorBunItem element={bun!} type="top" isTop />
       <ul
         className={cn(constructorStyles.list, {
           [constructorStyles.listActive]: isHover,
         })}
         ref={drop}
       >
-        {ordered.map((card, i) => (
-          <ConstructorItem
-            key={card.id}
-            id={card.id}
-            element={card}
-            moveCard={moveCard}
-            findCard={findCard}
-          />
-        ))}
+        {ordered.map(
+          (card, i) =>
+            card && (
+              <ConstructorItem
+                key={card.id}
+                id={card.id!}
+                element={card}
+                moveCard={moveCard}
+                findCard={findCard}
+              />
+            )
+        )}
       </ul>
-      <ConstructorBunItem element={bun} type="bottom" isBottom />
-      {bun._id && (
+      <ConstructorBunItem element={bun!} type="bottom" isBottom />
+      {bun?._id && (
         <div
           className={cn(
             constructorStyles.buttonContainer,
