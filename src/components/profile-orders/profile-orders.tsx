@@ -6,7 +6,7 @@ function ProfileOrders() {
   return (
     <section className={ordersStyles.section}>
       {data.map((item) => (
-        <OrderCard data={item} key={item.id} />
+        <OrderCard order={item} key={item.id} />
       ))}
     </section>
   );

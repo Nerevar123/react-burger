@@ -11,11 +11,13 @@ import {
   ADD_BUN,
   OPEN_INGREDIENT_MODAL,
   OPEN_ORDER_MODAL,
+  OPEN_ORDER_DETAILS_MODAL,
   CLOSE_MODALS,
 } from "../constants/ingredients";
 import { IIngredient, TIngredients } from "../../types/ingredient";
 import { AppThunk, AppDispatch } from "../types";
 import { getIngredientsRequest, postOrderRequest } from "../../utils/api";
+import { IOrder } from "../../types/order";
 
 export interface IGetIngredientsAction {
   readonly type: typeof GET_INGREDIENTS_REQUEST;
@@ -73,6 +75,11 @@ export interface IOpenOrderModalAction {
   readonly type: typeof OPEN_ORDER_MODAL;
 }
 
+export interface IOpenOrderDetailsAction {
+  readonly type: typeof OPEN_ORDER_DETAILS_MODAL;
+  readonly order: IOrder;
+}
+
 export interface ICloseModalsAction {
   readonly type: typeof CLOSE_MODALS;
 }
@@ -90,6 +97,7 @@ export type TIngredientsActions =
   | IAddBunAction
   | IOpenIngredientAction
   | IOpenOrderModalAction
+  | IOpenOrderDetailsAction
   | ICloseModalsAction;
 
 export const getIngredientsAction = (): IGetIngredientsAction => ({
@@ -161,6 +169,13 @@ export const openOrderModalAction = (): IOpenOrderModalAction => ({
   type: OPEN_ORDER_MODAL,
 });
 
+export const openOrderDetailsAction = (
+  order: IOrder
+): IOpenOrderDetailsAction => ({
+  type: OPEN_ORDER_DETAILS_MODAL,
+  order,
+});
+
 export const closeModalsAction = (): ICloseModalsAction => ({
   type: CLOSE_MODALS,
 });
@@ -179,7 +194,7 @@ export const getIngredientsThunk: AppThunk =
   };
 
 export const postOrderThunk: AppThunk =
-  (data) => (AppDispatch: AppDispatch) => {
+  (data: TIngredients) => (AppDispatch: AppDispatch) => {
     AppDispatch(postOrderAction());
     postOrderRequest(data)
       .then(({ order }) => {

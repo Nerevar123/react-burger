@@ -12,10 +12,12 @@ import {
   ADD_BUN,
   OPEN_INGREDIENT_MODAL,
   OPEN_ORDER_MODAL,
+  OPEN_ORDER_DETAILS_MODAL,
   CLOSE_MODALS,
 } from "../constants/ingredients";
 import { IIngredient, TIngredients } from "../../types/ingredient";
 import { TIngredientsActions } from "../actions/ingredients";
+import { IOrder } from "../../types/order";
 
 export type TIngredientsState = {
   buns: TIngredients;
@@ -26,8 +28,10 @@ export type TIngredientsState = {
   finalPrice: number | null;
   currentModalItem: IIngredient | null;
   orderNumber: number | null;
+  currentOrder: IOrder | null;
   orderModalOpen: boolean;
   ingredientModalOpen: boolean;
+  orderDetailsModalOpen: boolean;
   ingredientsRequest: boolean;
   ingredientsFailed: boolean;
   orderRequest: boolean;
@@ -45,8 +49,10 @@ const initialState: TIngredientsState = {
 
   currentModalItem: null,
   orderNumber: null,
+  currentOrder: null,
   orderModalOpen: false,
   ingredientModalOpen: false,
+  orderDetailsModalOpen: false,
 
   ingredientsRequest: false,
   ingredientsFailed: false,
@@ -151,12 +157,21 @@ export const ingredientsReducer = (
         orderModalOpen: true,
       };
     }
+    case OPEN_ORDER_DETAILS_MODAL: {
+      return {
+        ...state,
+        currentOrder: action.order,
+        orderDetailsModalOpen: true,
+      };
+    }
     case CLOSE_MODALS: {
       return {
         ...state,
         currentModalItem: null,
+        currentOrder: null,
         ingredientModalOpen: false,
         orderModalOpen: false,
+        orderDetailsModalOpen: false,
       };
     }
     default: {

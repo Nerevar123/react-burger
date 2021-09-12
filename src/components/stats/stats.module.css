@@ -1,0 +1,8 @@
+.orders {
+  display: flex;
+  gap: 36px;
+}
+
+.orderList {
+  width: 45%;
+}

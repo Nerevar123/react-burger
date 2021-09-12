@@ -191,7 +191,6 @@ export const logoutThunk: AppThunk = () => (AppDispatch: AppDispatch) => {
   const refreshToken = localStorage.getItem("refreshToken");
   logoutRequest({ token: refreshToken })
     .then(({ message }) => {
-      console.log(message);
       AppDispatch(logoutSuccessAction());
       localStorage.removeItem("refreshToken");
       deleteCookie("token");
@@ -205,7 +204,6 @@ export const forgotPasswordThunk: AppThunk =
   (data) => (AppDispatch: AppDispatch) => {
     forgotPasswordRequest(data)
       .then(({ message }) => {
-        console.log(message);
         AppDispatch(forgotPasswordSuccessAction());
       })
       .catch((err) => {
@@ -217,7 +215,6 @@ export const resetPasswordThunk: AppThunk =
   (data) => (AppDispatch: AppDispatch) => {
     resetPasswordRequest(data)
       .then(({ message }) => {
-        console.log(message);
         AppDispatch(resetPasswordSuccessAction());
       })
       .catch((err) => {
@@ -258,7 +255,7 @@ export const putUserThunk: AppThunk = (data) => (AppDispatch: AppDispatch) => {
     });
 };
 
-const refreshTokenThunk = () => (AppDispatch: AppDispatch) => {
+const refreshTokenThunk = () => {
   const refreshToken = localStorage.getItem("refreshToken");
   tokenRequest({ token: refreshToken })
     .then(({ accessToken, refreshToken }) => {

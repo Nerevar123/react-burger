@@ -3,10 +3,12 @@ import styles from "./home.module.css";
 
 function FeedPage() {
   return (
-    <div className={styles.grid}>
-      <Feed />
-      <Stats />
-    </div>
+    <>
+      <div className={styles.grid}>
+        <Feed />
+        <Stats />
+      </div>
+    </>
   );
 }
 

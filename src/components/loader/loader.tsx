@@ -4,7 +4,6 @@ import { ILoaderProps } from "./loader.types";
 
 const Loader = ({ size, inverse = false }: ILoaderProps) => {
   const loaderColor = inverse ? "#fff" : "#3C39EC";
-  console.log(size);
 
   const wrapperStyleKey = "wrapper_" + size;
   return (

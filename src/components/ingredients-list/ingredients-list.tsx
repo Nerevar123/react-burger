@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { useSelector } from "../../services/hooks";
 import { Ingredient } from "..";
 import Loader from "../loader/loader";
@@ -28,16 +27,5 @@ function IngredientsList({ items, title }: IngredientsListProps) {
     </>
   );
 }
-
-IngredientsList.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-    })
-  ),
-  title: PropTypes.string.isRequired,
-};
 
 export default IngredientsList;

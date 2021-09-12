@@ -15,6 +15,7 @@ import {
   IngredientDetails,
   OrderDetails,
   ProtectedRoute,
+  Order,
 } from "..";
 import {
   HomePage,
@@ -40,9 +41,8 @@ function App() {
   const size = useWindowSize();
   const validation = useValidation();
 
-  const { ingredientModalOpen, orderModalOpen } = useSelector(
-    (state) => state.ingredients
-  );
+  const { ingredientModalOpen, orderModalOpen, orderDetailsModalOpen } =
+    useSelector((state) => state.ingredients);
 
   let background = location.state && location.state.background;
 
@@ -69,6 +69,9 @@ function App() {
             <Route exact path="/feed">
               <FeedPage />
             </Route>
+            <Route path="/feed/:id">
+              <Order />
+            </Route>
             <ProtectedRoute path="/profile">
               <ProfilePage validation={validation} />
             </ProtectedRoute>
@@ -92,13 +95,29 @@ function App() {
             </Route>
           </Switch>
           {background && (
-            <Route path="/ingredients/:id">
-              {ingredientModalOpen && (
-                <Modal>
-                  <IngredientDetails />
-                </Modal>
-              )}
-            </Route>
+            <>
+              <Route path="/ingredients/:id">
+                {ingredientModalOpen && (
+                  <Modal>
+                    <IngredientDetails />
+                  </Modal>
+                )}
+              </Route>
+              <Route path="/feed/:id">
+                {orderDetailsModalOpen && (
+                  <Modal>
+                    <Order />
+                  </Modal>
+                )}
+              </Route>
+              <Route path="/profile/orders/:id">
+                {orderDetailsModalOpen && (
+                  <Modal>
+                    <Order />
+                  </Modal>
+                )}
+              </Route>
+            </>
           )}
         </main>
       </Router>

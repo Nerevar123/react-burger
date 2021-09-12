@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import ReactDOM from "react-dom";
 import { useDispatch } from "../../services/hooks";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -13,11 +13,14 @@ const modalRoot = document.getElementById("react-modals");
 function Modal({ children }: IModalProps) {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation<{
+    background: any;
+  }>();
 
   const handleClose = useCallback(() => {
     dispatch(closeModalsAction());
-    history.push("/");
-  }, [dispatch, history]);
+    history.push(location.state?.background?.pathname);
+  }, [dispatch, history, location]);
 
   useEffect(() => {
     function closeModalByEsc(e: KeyboardEvent) {

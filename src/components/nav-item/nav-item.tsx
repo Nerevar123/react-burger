@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import navItemStyles from "./nav-item.module.css";
 import { INavItemProps } from "./nav-item.types";
@@ -17,12 +16,5 @@ function NavItem({ text, icon, to, onClick, exact }: INavItemProps) {
     </NavLink>
   );
 }
-
-NavItem.propTypes = {
-  text: PropTypes.string.isRequired,
-  icon: PropTypes.element.isRequired,
-  to: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
-};
 
 export default NavItem;

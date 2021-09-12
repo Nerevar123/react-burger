@@ -1,24 +1,34 @@
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useCallback } from "react";
+import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch } from "../../services/hooks";
+import { openOrderDetailsAction } from "../../services/actions/ingredients";
 import orderStyles from "./order-card.module.css";
 import { IOrderCardProps } from "./order-card.types";
 
-function OrderCard({ data }: IOrderCardProps) {
+function OrderCard({ order, fromFeed }: IOrderCardProps) {
   const history = useHistory();
-  const { path } = useRouteMatch();
+  const location = useLocation();
+  const { url } = useRouteMatch();
+  const dispatch = useDispatch();
 
-  const handleClick = () => {
-    history.push({ pathname: `${path}/${data.id}` });
-  };
+  const handleClick = useCallback(() => {
+    dispatch(openOrderDetailsAction(order));
+    history.replace({
+      pathname: `${url}/${order.id}`,
+      state: { background: location },
+    });
+  }, [dispatch, history, location, order, url]);
 
-  const iconToRender = data.ingredients.slice(0, 5);
-
+  const iconToRender = order.ingredients.slice(0, 5);
   return (
     <article className={`${orderStyles.card} p-6`} onClick={handleClick}>
       <div className={orderStyles.info}>
-        <p className="text text_type_digits-default mb-6">#{data.id}</p>
-        <h2 className="text text_type_main-medium mb-2">{data.name}</h2>
-        <p className="text text_type_main-default mb-6">Создан</p>
+        <p className="text text_type_digits-default mb-6">#{order.id}</p>
+        <h2 className="text text_type_main-medium mb-2">{order.name}</h2>
+        {!fromFeed && (
+          <p className="text text_type_main-default mb-6">Создан</p>
+        )}
       </div>
       <div className={orderStyles.icons}>
         {iconToRender.map((icon: any) => (
@@ -34,10 +44,12 @@ function OrderCard({ data }: IOrderCardProps) {
       <span
         className={`${orderStyles.date} text text_type_main-default text_color_inactive`}
       >
-        {data.orderTime}
+        {order.orderTime}
       </span>
       <div className={orderStyles.priceContainer}>
-        <span className="text text_type_digits-default mr-2">{data.price}</span>
+        <span className="text text_type_digits-default mr-2">
+          {order.price}
+        </span>
         <CurrencyIcon type="primary" />
       </div>
     </article>

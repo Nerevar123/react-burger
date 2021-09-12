@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import cn from "classnames";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import bunIcon from "../../images/bun-icon.svg";
@@ -34,23 +33,5 @@ function ConstructorBunItem({
     </div>
   );
 }
-
-ConstructorBunItem.propTypes = {
-  element: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_large: PropTypes.string,
-    calories: PropTypes.number,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number,
-  }),
-  type: PropTypes.string,
-  isTop: PropTypes.bool,
-  isBottom: PropTypes.bool,
-};
 
 export default ConstructorBunItem;
