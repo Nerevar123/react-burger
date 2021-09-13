@@ -1,9 +1,33 @@
 import { TIngredients } from "./ingredient";
 
 export interface IOrder {
-  id: string;
-  orderTime: string;
+  _id: string;
+  createdAt: string;
   name: string;
+  number: number;
   price: number;
+  status?: string;
   ingredients: TIngredients;
+}
+
+export interface IRawOrder {
+  _id: string;
+  createdAt: string;
+  name: string;
+  number: number;
+  price: number;
+  status?: string;
+  ingredients: string[];
+}
+
+export interface IOrders {
+  orders: IOrder[];
+  total: number;
+  totalToday: number;
+}
+
+export interface IRawOrders {
+  orders: IRawOrder[];
+  total: number;
+  totalToday: number;
 }

@@ -11,7 +11,10 @@ export const getIngredientsRequest = () => {
 export const postOrderRequest = (data: TIngredients) => {
   return fetch(`${baseUrl}/orders`, {
     method: "POST",
-    headers: headers,
+    headers: {
+      "Content-Type": "application/json",
+      authorization: getCookie("token")!,
+    },
     body: JSON.stringify(data),
   }).then(checkError);
 };

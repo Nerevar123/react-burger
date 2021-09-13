@@ -2,14 +2,14 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "../../services/hooks";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import orderStyles from "./order.module.css";
-import data from "../../utils/orders.json";
 import { IIngredient } from "../../types/ingredient";
 
 function Order() {
   const { currentOrder } = useSelector((state) => state.ingredients);
+  const { orders } = useSelector((state) => state.ws);
   const { id } = useParams<{ id: string }>();
 
-  const order = currentOrder || data.find((order) => order.id === id);
+  const order = currentOrder || orders.orders.find((order) => order._id === id);
 
   if (!order) {
     return null;
@@ -20,14 +20,14 @@ function Order() {
       <p
         className={`${orderStyles.number} text text_type_digits-default mb-10`}
       >
-        #{order?.id}
+        #{order?.number}
       </p>
       <h2 className="text text_type_main-medium mb-3">{order?.name}</h2>
       <p className="text text_type_main-default mb-15">Создан</p>
       <p className="text text_type_main-medium mb-6">Состав:</p>
       <ul className={`${orderStyles.itemsList} pr-6`}>
         {order?.ingredients.map((item: IIngredient) => (
-          <li className={orderStyles.item} key={item._id}>
+          <li className={orderStyles.item} key={item.key}>
             <div className={`${orderStyles.pict} mr-4`}>
               <img
                 className={orderStyles.img}

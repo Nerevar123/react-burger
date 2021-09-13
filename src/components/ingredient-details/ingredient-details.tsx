@@ -4,16 +4,12 @@ import { useSelector } from "../../services/hooks";
 import ingredientDetailsStyles from "./ingredient-details.module.css";
 
 function IngredientDetails() {
-  const { buns, sauces, main, currentModalItem } = useSelector(
+  const { ingredients, currentModalItem } = useSelector(
     (state) => state.ingredients
   );
   const { id } = useParams<{ id: string }>();
 
-  const item =
-    currentModalItem ||
-    buns.find((item) => item._id === id) ||
-    sauces.find((item) => item._id === id) ||
-    main.find((item) => item._id === id);
+  const item = currentModalItem || ingredients.find((item) => item._id === id);
 
   if (!item) {
     return null;

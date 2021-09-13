@@ -20,6 +20,7 @@ import { TIngredientsActions } from "../actions/ingredients";
 import { IOrder } from "../../types/order";
 
 export type TIngredientsState = {
+  ingredients: TIngredients;
   buns: TIngredients;
   sauces: TIngredients;
   main: TIngredients;
@@ -33,12 +34,14 @@ export type TIngredientsState = {
   ingredientModalOpen: boolean;
   orderDetailsModalOpen: boolean;
   ingredientsRequest: boolean;
+  ingredientsRequestSuccess: boolean;
   ingredientsFailed: boolean;
   orderRequest: boolean;
   orderRequestFailed: boolean;
 };
 
 const initialState: TIngredientsState = {
+  ingredients: [],
   buns: [],
   sauces: [],
   main: [],
@@ -55,6 +58,7 @@ const initialState: TIngredientsState = {
   orderDetailsModalOpen: false,
 
   ingredientsRequest: false,
+  ingredientsRequestSuccess: false,
   ingredientsFailed: false,
   orderRequest: false,
   orderRequestFailed: false,
@@ -74,6 +78,7 @@ export const ingredientsReducer = (
     case GET_INGREDIENTS_SUCCESS: {
       return {
         ...state,
+        ingredients: action.ingredients,
         buns: action.ingredients.filter(
           (item: IIngredient) => item.type === "bun"
         ),
@@ -84,6 +89,7 @@ export const ingredientsReducer = (
           (item: IIngredient) => item.type === "main"
         ),
         ingredientsFailed: false,
+        ingredientsRequestSuccess: true,
         ingredientsRequest: false,
       };
     }

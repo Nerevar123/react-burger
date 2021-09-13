@@ -1,33 +1,58 @@
+import { useSelector } from "../../services/hooks";
 import statsStyles from "./stats.module.css";
+import { Loader } from "..";
+import { ESizes } from "../loader/loader.types";
 
 function Stats() {
+  const { orders } = useSelector((state) => state.ws);
+
+  const finishedOrders = orders.orders
+    .filter((order) => order.status === "done")
+    .slice(0, 20);
+
+  const inWorkOrders = orders.orders
+    .filter((order) => order.status === "pending")
+    .slice(0, 20);
+
+  if (orders.orders.length === 0) {
+    return <Loader size={ESizes.large} />;
+  }
+
   return (
     <>
       <section className="mt-25">
         <div className={statsStyles.orders}>
-          <div className={statsStyles.orderList}>
+          <div className={statsStyles.ordersContainer}>
             <p className="text text_type_main-medium mb-6">Готовы:</p>
-            <p className="text text_type_digits-default mb-2">034533</p>
-            <p className="text text_type_digits-default mb-2">034533</p>
-            <p className="text text_type_digits-default mb-2">034533</p>
-            <p className="text text_type_digits-default mb-2">034533</p>
-            <p className="text text_type_digits-default mb-2">034533</p>
+            <ul className={statsStyles.orderList}>
+              {finishedOrders.map((order) => (
+                <li key={order._id}>
+                  <p className="text text_type_digits-default mb-2">
+                    {order.number}
+                  </p>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className={statsStyles.orderList}>
+          <div className={statsStyles.ordersContainer}>
             <p className="text text_type_main-medium mb-6">В работе:</p>
-            <p className="text text_type_digits-default mb-2">034533</p>
-            <p className="text text_type_digits-default mb-2">034533</p>
-            <p className="text text_type_digits-default mb-2">034533</p>
-            <p className="text text_type_digits-default mb-2">034533</p>
-            <p className="text text_type_digits-default mb-2">034533</p>
+            <ul className={statsStyles.orderList}>
+              {inWorkOrders.map((order) => (
+                <li key={order._id}>
+                  <p className="text text_type_digits-default mb-2">
+                    {order.number}
+                  </p>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
         <p className="text text_type_main-medium mt-15">
           Выполнено за все время:
         </p>
-        <p className="text text_type_digits-large mb-15">28 752</p>
+        <p className="text text_type_digits-large mb-15">{orders.total}</p>
         <p className="text text_type_main-medium">Выполнено за сегодня:</p>
-        <p className="text text_type_digits-large">138</p>
+        <p className="text text_type_digits-large">{orders.totalToday}</p>
       </section>
     </>
   );

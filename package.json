@@ -15,6 +15,7 @@
     "classnames": "^2.3.1",
     "immutability-helper": "^3.1.1",
     "lottie-react": "^2.1.0",
+    "luxon": "^2.0.2",
     "react": "^17.0.2",
     "react-dnd": "^14.0.2",
     "react-dnd-html5-backend": "^14.0.0",
@@ -25,6 +26,7 @@
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
     "typescript": "^4.2.4",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -54,7 +56,9 @@
     ]
   },
   "devDependencies": {
+    "@types/luxon": "^2.0.3",
     "@types/react-router-dom": "^5.1.7",
+    "@types/uuid": "^8.3.1",
     "redux-devtools-extension": "^2.13.9"
   }
 }

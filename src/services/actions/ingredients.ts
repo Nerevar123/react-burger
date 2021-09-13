@@ -18,6 +18,7 @@ import { IIngredient, TIngredients } from "../../types/ingredient";
 import { AppThunk, AppDispatch } from "../types";
 import { getIngredientsRequest, postOrderRequest } from "../../utils/api";
 import { IOrder } from "../../types/order";
+import { wsSetIngredients } from "./ws";
 
 export interface IGetIngredientsAction {
   readonly type: typeof GET_INGREDIENTS_REQUEST;
@@ -186,6 +187,7 @@ export const getIngredientsThunk: AppThunk =
     getIngredientsRequest()
       .then((res) => {
         AppDispatch(getIngredientsSuccessAction(res.data));
+        AppDispatch(wsSetIngredients(res.data));
       })
       .catch((err) => {
         console.error(err);

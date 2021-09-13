@@ -3,6 +3,16 @@
   gap: 36px;
 }
 
-.orderList {
+.ordersContainer {
   width: 45%;
+}
+
+.orderList {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  max-height: 320px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
