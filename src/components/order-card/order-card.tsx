@@ -1,11 +1,11 @@
 import { useCallback } from "react";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
-import { DateTime } from "luxon";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "../../services/hooks";
 import { openOrderDetailsAction } from "../../services/actions/ingredients";
 import orderStyles from "./order-card.module.css";
 import { IOrderCardProps } from "./order-card.types";
+import { formatDate } from "../../utils/utils";
 
 function OrderCard({ order, fromFeed }: IOrderCardProps) {
   const history = useHistory();
@@ -20,24 +20,6 @@ function OrderCard({ order, fromFeed }: IOrderCardProps) {
       state: { background: location },
     });
   }, [dispatch, history, location, order, url]);
-
-  function isValidDate(date: string) {
-    const dateWrapper = new Date(date);
-    return !isNaN(dateWrapper.getDate());
-  }
-
-  function formatDate(date: string) {
-    if (!isValidDate(date)) return null;
-
-    const oldDate = DateTime.fromISO(date);
-    const timeZone = oldDate.offsetNameShort;
-    const time = oldDate.toLocaleString(DateTime.TIME_24_SIMPLE);
-    const day = oldDate.toRelativeCalendar();
-
-    const newDate = `${day}, ${time} ${timeZone}`;
-
-    return newDate;
-  }
 
   const iconToRender = order.ingredients.slice(0, 5);
   return (

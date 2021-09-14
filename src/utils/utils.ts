@@ -1,3 +1,5 @@
+import { DateTime } from "luxon";
+
 export const baseUrl = "https://norma.nomoreparties.space/api";
 export const headers = {
   "Content-Type": "application/json",
@@ -20,6 +22,24 @@ export const checkError = async (res: Response) => {
       return Promise.reject(text.message || text.error || text);
     });
 };
+
+function isValidDate(date: string) {
+  const dateWrapper = new Date(date);
+  return !isNaN(dateWrapper.getDate());
+}
+
+export function formatDate(date: string) {
+  if (!isValidDate(date)) return null;
+
+  const oldDate = DateTime.fromISO(date);
+  const timeZone = oldDate.offsetNameShort;
+  const time = oldDate.toLocaleString(DateTime.TIME_24_SIMPLE);
+  const day = oldDate.toRelativeCalendar();
+
+  const newDate = `${day}, ${time} ${timeZone}`;
+
+  return newDate;
+}
 
 export function setCookie(name: string, value: string | null, props?: any) {
   props = props || {};

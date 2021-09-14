@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import cn from "classnames";
 import { useDispatch, useSelector } from "../../services/hooks";
 import { useDrop } from "react-dnd";
@@ -18,6 +18,7 @@ import {
 import constructorStyles from "./burger-constructor.module.css";
 
 function BurgerConstructor() {
+  const location = useLocation();
   const size = useWindowSize();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -28,12 +29,12 @@ function BurgerConstructor() {
 
   const handleConfirmClick = useCallback(() => {
     if (!isLoggedIn) {
-      history.push("/login");
+      history.push("/login", { from: location });
     } else {
       const orderItems = ordered.map((item) => item._id);
       dispatch(postOrderThunk({ ingredients: [...orderItems, bun?._id] }));
     }
-  }, [bun?._id, dispatch, history, isLoggedIn, ordered]);
+  }, [bun?._id, dispatch, history, isLoggedIn, location, ordered]);
 
   const moveItem = useCallback(
     (item) => {

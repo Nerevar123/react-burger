@@ -31,7 +31,6 @@ import { getIngredientsThunk } from "../../services/actions/ingredients";
 import useWindowSize from "../../hooks/useWindowSize";
 import useValidation from "../../hooks/useValidation";
 import appStyles from "./app.module.css";
-import { wsConnectionStart } from "../../services/actions/ws";
 
 function App() {
   const history = useHistory();
@@ -42,23 +41,14 @@ function App() {
   const size = useWindowSize();
   const validation = useValidation();
 
-  const {
-    ingredientModalOpen,
-    orderModalOpen,
-    orderDetailsModalOpen,
-    ingredientsRequestSuccess,
-  } = useSelector((state) => state.ingredients);
+  const { ingredientModalOpen, orderModalOpen, orderDetailsModalOpen } =
+    useSelector((state) => state.ingredients);
 
   let background = location.state && location.state.background;
 
   useEffect(() => {
-    if (!ingredientsRequestSuccess) {
-      dispatch(getIngredientsThunk());
-    }
-    if (ingredientsRequestSuccess) {
-      dispatch(wsConnectionStart("wss://norma.nomoreparties.space/orders/all"));
-    }
-  }, [dispatch, ingredientsRequestSuccess]);
+    dispatch(getIngredientsThunk());
+  }, [dispatch]);
 
   useEffect(() => {
     history.replace({
@@ -82,7 +72,7 @@ function App() {
             <Route path="/feed/:id">
               <Order />
             </Route>
-            <ProtectedRoute path="/profile">
+            <ProtectedRoute path="/profile" location={location}>
               <ProfilePage validation={validation} />
             </ProtectedRoute>
             <Route exact path="/login">

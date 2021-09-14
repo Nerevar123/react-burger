@@ -1,8 +1,9 @@
 import { RootState } from "../types";
 import { Middleware } from "redux";
-export type WsActions = {
-  [name: string]: string;
-};
+import { wsActions } from "../store";
+
+export type WsActions = typeof wsActions;
+
 export const createSocketMiddleware = (
   wsUrl: string,
   wsActions: WsActions

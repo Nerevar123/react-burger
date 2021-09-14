@@ -3,6 +3,7 @@ import { useSelector } from "../../services/hooks";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import orderStyles from "./order.module.css";
 import { IIngredient } from "../../types/ingredient";
+import { formatDate } from "../../utils/utils";
 
 function Order() {
   const { currentOrder } = useSelector((state) => state.ingredients);
@@ -53,7 +54,7 @@ function Order() {
         <span
           className={`${orderStyles.date} text text_type_main-default text_color_inactive`}
         >
-          Сегодня, 16:20 i-GMT+3
+          {formatDate(order.createdAt)}
         </span>
         <div className={orderStyles.priceContainer}>
           <span className="text text_type_digits-default mr-2">480</span>

@@ -1,6 +1,11 @@
 import { FormEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "../services/hooks";
-import { Route, useRouteMatch, useHistory } from "react-router-dom";
+import {
+  Route,
+  useRouteMatch,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import {
   EmailInput,
   PasswordInput,
@@ -13,6 +18,7 @@ import { IUserPageProps } from "./pages.types";
 
 function ProfilePage({ validation }: IUserPageProps) {
   const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
   const { path } = useRouteMatch();
   const { values, errors, handleChange, resetForm } = validation;
@@ -27,9 +33,9 @@ function ProfilePage({ validation }: IUserPageProps) {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      history.push("/login");
+      history.push("/login", { from: location });
     }
-  }, [history, isLoggedIn]);
+  }, [history, isLoggedIn, location]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

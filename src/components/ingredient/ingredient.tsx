@@ -19,7 +19,7 @@ const Ingredient = memo(function Ingredient({ item }: IIngredientProps) {
 
   useEffect(() => {
     if (item.type === "bun") {
-      setCounter(bun?._id === item._id ? 1 : 0);
+      setCounter(bun?._id === item._id ? 2 : 0);
     } else {
       setCounter(ordered.filter((el) => el._id === item._id).length);
     }
