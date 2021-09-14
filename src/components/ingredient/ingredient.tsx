@@ -47,6 +47,7 @@ const Ingredient = memo(function Ingredient({ item }: IIngredientProps) {
       onClick={onItemClick}
       ref={ref}
       style={{ opacity }}
+      data-test-id="ingredient"
     >
       <img src={item.image} alt={item.name} className="pr-4 pl-4 mb-2" />
       <div className={`${ingredientStyles.priceContainer} mb-3`}>

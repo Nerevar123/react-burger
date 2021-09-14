@@ -79,6 +79,7 @@ function BurgerConstructor() {
     <section
       className={`${constructorStyles.section} mt-25 pl-4`}
       ref={dropTarget}
+      data-test-id="dropTarget"
     >
       <ConstructorBunItem element={bun!} type="top" isTop />
       <ul
