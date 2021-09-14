@@ -22,7 +22,7 @@ const token = "token";
 
 const user = "user";
 
-describe("header reducer", () => {
+describe("user reducer", () => {
   it("should return the initial state", () => {
     expect(userReducer(undefined, {})).toEqual(initialState);
   });

@@ -25,7 +25,7 @@ const initialState = {
   orderRequestFailed: false,
 };
 
-describe("header reducer", () => {
+describe("ingredients reducer", () => {
   it("should return the initial state", () => {
     expect(ingredientsReducer(undefined, {})).toEqual(initialState);
   });
