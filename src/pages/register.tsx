@@ -46,51 +46,47 @@ function RegisterPage({ validation }: IUserPageProps) {
 
   return (
     <UserSection title="Регистрация">
-      <>
-        <UserForm
-          buttonText="Зарегистрироваться"
-          onSubmit={handleSubmit}
-          className="register"
-        >
-          <>
-            <div className={`${styles.input} mt-6`}>
-              <Input
-                onChange={handleChange}
-                value={values.name || ""}
-                name={"name"}
-                type="text"
-                placeholder="Имя"
-                error={!!errors.name}
-                errorText={errors.name}
-              />
-            </div>
-            <div className={`${styles.input} mt-6`}>
-              <Input
-                onChange={handleChange}
-                value={values.email || ""}
-                name={"email"}
-                type="email"
-                placeholder="E-mail"
-                error={!!errors.email}
-                errorText={errors.email}
-              />
-            </div>
-            <div className={`${styles.input} mt-6`}>
-              <PasswordInput
-                onChange={handleChange}
-                value={values.password || ""}
-                name={"password"}
-              />
-            </div>
-          </>
-        </UserForm>
-        <p className="text text_type_main-default mb-4">
-          Уже зарегистрированы?{" "}
-          <Link to="/login" className={styles.link}>
-            Войти
-          </Link>
-        </p>
-      </>
+      <UserForm
+        buttonText="Зарегистрироваться"
+        onSubmit={handleSubmit}
+        className="register"
+      >
+        <div className={`${styles.input} mt-6`}>
+          <Input
+            onChange={handleChange}
+            value={values.name || ""}
+            name={"name"}
+            type="text"
+            placeholder="Имя"
+            error={!!errors.name}
+            errorText={errors.name}
+          />
+        </div>
+        <div className={`${styles.input} mt-6`}>
+          <Input
+            onChange={handleChange}
+            value={values.email || ""}
+            name={"email"}
+            type="email"
+            placeholder="E-mail"
+            error={!!errors.email}
+            errorText={errors.email}
+          />
+        </div>
+        <div className={`${styles.input} mt-6`}>
+          <PasswordInput
+            onChange={handleChange}
+            value={values.password || ""}
+            name={"password"}
+          />
+        </div>
+      </UserForm>
+      <p className="text text_type_main-default mb-4">
+        Уже зарегистрированы?{" "}
+        <Link to="/login" className={styles.link}>
+          Войти
+        </Link>
+      </p>
     </UserSection>
   );
 }

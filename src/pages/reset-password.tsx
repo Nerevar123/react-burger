@@ -52,39 +52,35 @@ function ResetPasswordPage({ validation }: IUserPageProps) {
 
   return (
     <UserSection title="Восстановление пароля">
-      <>
-        <UserForm
-          buttonText="Сохранить"
-          onSubmit={handleSubmit}
-          className="reset"
-        >
-          <>
-            <div className={`${styles.input} mt-6`}>
-              <PasswordInput
-                onChange={handleChange}
-                value={values.password || ""}
-                name={"password"}
-              />
-            </div>
-            <div className={`${styles.input} mt-6`}>
-              <Input
-                onChange={handleChange}
-                value={values.token || ""}
-                name={"token"}
-                placeholder="Введите код из письма"
-                error={!!errors.token}
-                errorText={errors.token}
-              />
-            </div>
-          </>
-        </UserForm>
-        <p className="text text_type_main-default mb-4">
-          Вспомнили пароль?{" "}
-          <Link to="/login" className={styles.link}>
-            Войти
-          </Link>
-        </p>
-      </>
+      <UserForm
+        buttonText="Сохранить"
+        onSubmit={handleSubmit}
+        className="reset"
+      >
+        <div className={`${styles.input} mt-6`}>
+          <PasswordInput
+            onChange={handleChange}
+            value={values.password || ""}
+            name={"password"}
+          />
+        </div>
+        <div className={`${styles.input} mt-6`}>
+          <Input
+            onChange={handleChange}
+            value={values.token || ""}
+            name={"token"}
+            placeholder="Введите код из письма"
+            error={!!errors.token}
+            errorText={errors.token}
+          />
+        </div>
+      </UserForm>
+      <p className="text text_type_main-default mb-4">
+        Вспомнили пароль?{" "}
+        <Link to="/login" className={styles.link}>
+          Войти
+        </Link>
+      </p>
     </UserSection>
   );
 }

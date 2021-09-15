@@ -11,12 +11,10 @@ function FeedPage() {
     dispatch(wsConnectionStart("wss://norma.nomoreparties.space/orders/all"));
   }, [dispatch]);
   return (
-    <>
-      <div className={styles.grid}>
-        <Feed />
-        <Stats />
-      </div>
-    </>
+    <div className={styles.grid}>
+      <Feed />
+      <Stats />
+    </div>
   );
 }
 
