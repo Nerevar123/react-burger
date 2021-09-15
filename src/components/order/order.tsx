@@ -1,14 +1,31 @@
 import { useParams } from "react-router-dom";
-import { useSelector } from "../../services/hooks";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "../../services/hooks";
+import { wsConnectionStart, wsConnectionStop } from "../../services/actions/ws";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import orderStyles from "./order.module.css";
 import { IIngredient } from "../../types/ingredient";
-import { formatDate } from "../../utils/utils";
+import { formatDate, getCookie } from "../../utils/utils";
 
 function Order() {
+  const dispatch = useDispatch();
   const { currentOrder } = useSelector((state) => state.ingredients);
   const { orders } = useSelector((state) => state.ws);
   const { id } = useParams<{ id: string }>();
+  const token = getCookie("token");
+
+  useEffect(() => {
+    dispatch(
+      wsConnectionStart(
+        `wss://norma.nomoreparties.space/orders?token=${
+          token?.split("Bearer ")[1]
+        }`
+      )
+    );
+    return () => {
+      dispatch(wsConnectionStop());
+    };
+  }, [dispatch, token]);
 
   const order = currentOrder || orders.orders.find((order) => order._id === id);
 
